@@ -667,16 +667,40 @@
             monthly: () => {
               const clone = createExpenseItem(elements.monthlyTemplate);
               elements.monthlyContainer.appendChild(clone);
+
+              // Focus the name input of the newly added expense
+              const nameInput =
+                elements.monthlyContainer.lastElementChild.querySelector(
+                  'input[name="monthly-name"]'
+                );
+              if (nameInput) nameInput.focus();
+
               updateAndSave();
             },
             weekly: () => {
               const clone = createExpenseItem(elements.weeklyTemplate);
               elements.weeklyContainer.appendChild(clone);
+
+              // Focus the name input of the newly added expense
+              const nameInput =
+                elements.weeklyContainer.lastElementChild.querySelector(
+                  'input[name="weekly-name"]'
+                );
+              if (nameInput) nameInput.focus();
+
               updateAndSave();
             },
             daily: () => {
               const clone = createExpenseItem(elements.dailyTemplate);
               elements.dailyContainer.appendChild(clone);
+
+              // Focus the name input of the newly added expense
+              const nameInput =
+                elements.dailyContainer.lastElementChild.querySelector(
+                  'input[name="daily-name"]'
+                );
+              if (nameInput) nameInput.focus();
+
               updateAndSave();
             },
           };
