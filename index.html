@@ -1,713 +1,944 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Budget App</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      :root {
+        /* Colors */
+        --primary-color: #007aff;
+        --primary-hover: #0056b3;
+        --primary-active: #004494;
+        --background-color: #f5f5f7;
+        --surface-color: white;
+        --text-primary: #1d1d1f;
+        --text-secondary: #424245;
+        --text-muted: #6e6e73;
+        --border-color: #d2d2d7;
+        --border-light: #e5e5e7;
+        --remove-button-bg: #e5e5e7;
+        --remove-button-hover: #ff3b30;
+        --remove-button-active: #d70015;
+        --gradient-start: #667eea;
+        --gradient-end: #764ba2;
+        --legend-bg-start: #f0f0f0;
+        --legend-bg-end: #c8c8c8;
+        --legend-border: #999;
 
+        /* Spacing */
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 0.75rem;
+        --spacing-lg: 1rem;
+        --spacing-xl: 1.25rem;
+        --spacing-2xl: 2.5rem;
+        --spacing-3xl: 3rem;
+
+        /* Border radius */
+        --radius-sm: 0.5rem;
+        --radius-md: 0.75rem;
+
+        /* Borders */
+        --border-thin: 0.0625rem;
+        --border-thick: 0.125rem;
+
+        /* Typography */
+        --font-size-sm: 0.875rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-weight-medium: 500;
+        --font-weight-semibold: 600;
+        --font-weight-bold: 700;
+
+        /* Component sizes */
+        --button-size: 2.75rem;
+        --input-padding: var(--spacing-md);
+        --prefix-offset: 1.75rem;
+        --day-prefix-offset: var(--spacing-3xl);
+
+        /* Shadows */
+        --shadow-sm: 0 var(--border-thick) var(--spacing-sm) rgba(0, 0, 0, 0.1);
+        --shadow-focus: 0 0 0 var(--border-thick) rgba(0, 122, 255, 0.1);
+        --shadow-focus-white: 0 0 0 0.1875rem rgba(255, 255, 255, 0.3);
+        --shadow-legend: inset 0 var(--border-thin) 0 rgba(255, 255, 255, 0.6),
+          0 var(--border-thick) var(--spacing-xs) rgba(0, 0, 0, 0.2);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-primary);
+        line-height: 1.4;
+        padding: var(--spacing-lg);
+      }
+
+      /* Center app on desktop with max width */
+      .app-container {
+        max-width: 30rem;
+        margin: 0 auto;
+      }
+
+      fieldset {
+        border: var(--border-thick) solid var(--border-color);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--spacing-xl);
+        padding: var(--spacing-lg);
+        background: var(--surface-color);
+        box-shadow: var(--shadow-sm);
+      }
+
+      legend {
+        font-weight: bold;
+        font-size: var(--font-size-base);
+        color: var(--text-primary);
+        padding: var(--spacing-xs) var(--spacing-md);
+        background: linear-gradient(
+          to bottom,
+          var(--legend-bg-start) 0%,
+          var(--legend-bg-end) 100%
+        );
+        border: var(--border-thick) solid var(--legend-border);
+        border-radius: var(--radius-sm);
+        text-shadow: 0 var(--border-thin) 0 rgba(255, 255, 255, 0.8);
+        box-shadow: var(--shadow-legend);
+      }
+
+      .expense-item {
+        border-bottom: var(--border-thin) solid var(--border-light);
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        position: relative;
+      }
+
+      .expense-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .name-row {
+        margin-bottom: var(--spacing-sm);
+        display: flex;
+        gap: var(--spacing-sm);
+      }
+
+      .name-row input {
+        flex: 1;
+      }
+
+      .name-row .remove-expense {
+        flex: 0 0 auto;
+      }
+
+      .details-row {
+        display: flex;
+        gap: var(--spacing-sm);
+      }
+
+      .details-row input,
+      .details-row select {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .details-row .amount-input-wrapper {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .details-row .day-input-wrapper {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .expense-item .remove-expense {
+        width: var(--button-size);
+        height: var(--button-size);
+        border-radius: var(--radius-sm);
+        background: var(--remove-button-bg);
+        color: var(--text-muted);
+        border: none;
+        font-size: var(--font-size-base);
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        line-height: 1;
+        box-sizing: border-box;
+        min-width: var(--button-size);
+        min-height: var(--button-size);
+        transition: background-color 0.2s, color 0.2s, transform 0.1s;
+      }
+
+      .expense-item .remove-expense:hover {
+        background: var(--remove-button-hover);
+        color: var(--surface-color);
+        transform: scale(1.05);
+      }
+
+      .expense-item .remove-expense:active {
+        background: var(--remove-button-active);
+        color: var(--surface-color);
+        transform: scale(0.95);
+      }
+
+      label {
+        display: block;
+        margin-bottom: var(--spacing-sm);
+        font-weight: var(--font-weight-medium);
+        color: var(--text-secondary);
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: var(--input-padding);
+        border: var(--border-thin) solid var(--border-color);
+        border-radius: var(--radius-sm);
+        font-size: var(--font-size-base);
+        background: var(--surface-color);
+        -webkit-appearance: none;
+        appearance: none;
+        font-family: inherit;
+      }
+
+      select {
+        background-image: linear-gradient(45deg, transparent 50%, #666 50%),
+          linear-gradient(135deg, #666 50%, transparent 50%);
+        background-position: calc(100% - var(--spacing-xl))
+            calc(1em + var(--border-thick)),
+          calc(100% - 0.9375rem) calc(1em + var(--border-thick));
+        background-size: 0.3125rem 0.3125rem, 0.3125rem 0.3125rem;
+        background-repeat: no-repeat;
+        padding-right: 2.1875rem;
+      }
+
+      input[name="pay-day"] {
+        width: 4rem;
+      }
+
+      /* Add £ prefix to amount inputs */
+      .amount-input-wrapper {
+        position: relative;
+      }
+
+      .amount-input-wrapper::before {
+        content: "£";
+        position: absolute;
+        left: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: var(--font-size-base);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Add day prefix to monthly-day inputs */
+      .day-input-wrapper {
+        position: relative;
+      }
+
+      .day-input-wrapper::before {
+        content: "day:";
+        position: absolute;
+        left: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        font-size: var(--font-size-base);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      input[name$="-amount"] {
+        padding-left: var(--prefix-offset);
+      }
+
+      input[name="monthly-day"] {
+        padding-left: var(--day-prefix-offset);
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-focus);
+      }
+
+      button:not(.remove-expense) {
+        width: 100%;
+        padding: 0.875rem;
+        background: var(--primary-color);
+        color: var(--surface-color);
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-semibold);
+        cursor: pointer;
+        margin-top: var(--spacing-md);
+        transition: background-color 0.2s;
+        font-family: inherit;
+      }
+
+      button:not(.remove-expense):hover {
+        background: var(--primary-hover);
+      }
+
+      button:not(.remove-expense):active {
+        background: var(--primary-active);
+      }
+
+      #monthly-expenses-container,
+      #weekly-expenses-container,
+      #daily-expenses-container {
+        margin-bottom: var(--spacing-md);
+      }
+
+      /* Totals section styling */
+      .totals-fieldset {
+        background: linear-gradient(
+          135deg,
+          var(--gradient-start) 0%,
+          var(--gradient-end) 100%
+        );
+        color: var(--surface-color);
+        border-color: var(--gradient-start);
+      }
+
+      .totals-fieldset label {
+        color: var(--surface-color);
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-md);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .totals-fieldset span {
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-lg);
+      }
+
+      .totals-fieldset input {
+        background: rgba(255, 255, 255, 0.9);
+        border: var(--border-thin) solid rgba(255, 255, 255, 0.3);
+        color: var(--text-primary);
+      }
+
+      .totals-fieldset input:focus {
+        background: var(--surface-color);
+        border-color: var(--surface-color);
+        box-shadow: var(--shadow-focus-white);
+      }
+
+      hr {
+        border: none;
+        height: var(--border-thin);
+        background: rgba(255, 255, 255, 0.3);
+        margin: var(--spacing-lg) 0;
+      }
+
+      /* Responsive improvements */
+      @media (max-width: 30rem) {
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            line-height: 1.4;
-            padding: 16px;
+          padding: var(--spacing-md);
         }
 
         fieldset {
-            border: 2px solid #d2d2d7;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            padding: 16px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          padding: var(--spacing-md);
+          margin-bottom: var(--spacing-lg);
         }
 
         legend {
-            font-weight: 600;
-            font-size: 18px;
-            color: #007aff;
-            padding: 0 8px;
+          font-size: var(--font-size-sm);
         }
 
-        .expense-item {
-            background: #f8f8f8;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #e5e5e7;
-            display: grid;
-            gap: 8px;
-            position: relative;
+        input,
+        select,
+        button {
+          font-size: var(--font-size-base); /* Prevents zoom on iOS */
         }
+      }
 
-        .expense-item.monthly-expense {
-            grid-template-columns: 1fr 6rem 8rem;
+      /* Loading animation for better UX */
+      .expense-item {
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-0.625rem);
         }
-
-        .expense-item.weekly-expense {
-            grid-template-columns: 1fr 6rem 7rem;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .expense-item.daily-expense {
-            grid-template-columns: 1fr 6rem;
-        }
+      /* Better spacing for labels containing inputs */
+      label:has(input),
+      label:has(select) {
+        display: block;
+      }
 
-        .expense-item label {
-            margin-bottom: 0;
-            display: flex;
-            flex-direction: column;
-        }
+      /* Improve touch targets */
+      button,
+      input,
+      select {
+        min-height: var(--button-size);
+      }
 
-        .expense-item label span {
-            margin-bottom: 4px;
-            font-weight: 500;
-            color: #424245;
-        }
+      /* Footer styling */
+      footer {
+        margin-top: var(--spacing-2xl);
+        padding: var(--spacing-xl) 0;
+        border-top: var(--border-thin) solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: var(--font-size-sm);
+        color: var(--text-muted);
+      }
 
-        .expense-item .remove-expense {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: #ff3b30;
-            color: white;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            line-height: 1;
-            box-sizing: border-box;
-            min-width: 24px;
-            min-height: 24px;
-            transition: background-color 0.2s, transform 0.1s;
-        }
+      footer .copyright {
+        font-weight: var(--font-weight-medium);
+      }
 
-        .expense-item .remove-expense:hover {
-            background: #d70015;
-            transform: scale(1.1);
-        }
+      footer .tagline {
+        font-style: italic;
+      }
 
-        .expense-item .remove-expense:active {
-            transform: scale(0.95);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #424245;
-        }
-
-        /* Override for expense item labels */
-        .expense-item label {
-            margin-bottom: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .expense-item label span {
-            margin-bottom: 4px;
-            font-weight: 500;
-            color: #424245;
-            font-size: 14px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d2d2d7;
-            border-radius: 8px;
-            font-size: 16px;
-            background: white;
-            margin-top: 4px;
-            -webkit-appearance: none;
-            appearance: none;
-        }
-
-        input[name="pay-day"] {
-            width: 4rem;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #007aff;
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-        }
-
-        button:not(.remove-expense) {
-            width: 100%;
-            padding: 14px;
-            background: #007aff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 12px;
-            transition: background-color 0.2s;
-        }
-
-        button:not(.remove-expense):hover {
-            background: #0056b3;
-        }
-
-        button:not(.remove-expense):active {
-            background: #004494;
-        }
-
-        .remove-expense {
-            background: #ff3b30;
-            margin-top: 8px;
-            padding: 8px;
-            font-size: 14px;
-        }
-
-        .remove-expense:hover {
-            background: #d70015;
-        }
-
-        #monthly-expenses-container,
-        #weekly-expenses-container,
-        #daily-expenses-container {
-            margin-bottom: 12px;
-        }
-
-        /* Totals section styling */
-        fieldset:last-of-type {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-        }
-
-        fieldset:last-of-type legend {
-            color: white;
-        }
-
-        fieldset:last-of-type label {
-            color: white;
-            font-size: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        fieldset:last-of-type span {
-            font-weight: 700;
-            font-size: 18px;
-        }
-
-        fieldset:last-of-type input {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #1d1d1f;
-        }
-
-        fieldset:last-of-type input:focus {
-            background: white;
-            border-color: white;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-        }
-
-        hr {
-            border: none;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.3);
-            margin: 16px 0;
-        }
-
-        /* Responsive improvements */
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
-
-            fieldset {
-                padding: 12px;
-                margin-bottom: 16px;
-            }
-
-            legend {
-                font-size: 16px;
-            }
-
-            input, select, button {
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-        }
-
-        /* Loading animation for better UX */
-        .expense-item {
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Better spacing for labels containing inputs */
-        label:has(input), label:has(select) {
-            display: block;
-        }
-
-        /* Improve touch targets */
-        button, input, select {
-            min-height: 44px;
-        }
-
-        /* Footer styling */
+      @media (max-width: 30rem) {
         footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            border-top: 1px solid #d2d2d7;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            color: #6e6e73;
+          flex-direction: column;
+          gap: var(--spacing-sm);
+          text-align: center;
         }
-
-        footer .copyright {
-            font-weight: 500;
-        }
-
-        footer .tagline {
-            font-style: italic;
-        }
-
-        @media (max-width: 480px) {
-            footer {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <template id="monthly-expense-template">
-        <div class="expense-item monthly-expense">
-            <label>
-                <span>Name:</span>
-                <input type="text" name="monthly-name">
+  </head>
+  <body>
+    <div class="app-container">
+      <form id="budget-form">
+        <fieldset class="totals-fieldset">
+          <legend>Totals</legend>
+          <div>
+            <label>Monthly Total: <span id="monthly-total">£0.00</span></label>
+          </div>
+          <hr />
+          <div>
+            <label
+              >Pay day:
+              <input
+                type="number"
+                name="pay-day"
+                step="1"
+                min="1"
+                max="31"
+                value="25"
+              />
             </label>
-            
-            <label>
-                <span>Amount:</span>
-                <input type="number" name="monthly-amount" step="0.01" inputmode="decimal">
-            </label>
-            
-            <label>
-                <span>Day of Month:</span>
-                <input type="number" name="monthly-day" min="1" max="31">
-            </label>
-            
-            <button type="button" class="remove-expense">×</button>
-        </div>
-    </template>
+          </div>
+          <div>
+            <label
+              >Expenses Until Payday:
+              <span id="payday-total">£0.00</span></label
+            >
+          </div>
+        </fieldset>
 
-    <template id="weekly-expense-template">
-        <div class="expense-item weekly-expense">
-            <label>
-                <span>Name:</span>
-                <input type="text" name="weekly-name">
-            </label>
-            
-            <label>
-                <span>Amount:</span>
-                <input type="number" name="weekly-amount" step="0.01" inputmode="decimal">
-            </label>
-            
-            <label>
-                <span>Day of Week:</span>
-                <select name="weekly-day">
-                    <option value="">Select a day</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
-                    <option value="saturday">Saturday</option>
-                    <option value="sunday">Sunday</option>
-                </select>
-            </label>
-            
-            <button type="button" class="remove-expense">×</button>
-        </div>
-    </template>
+        <template id="monthly-expense-template">
+          <div class="expense-item monthly-expense">
+            <div class="name-row">
+              <input type="text" name="monthly-name" placeholder="Name" />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+              >
+                ×
+              </button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="monthly-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                />
+              </div>
+              <div class="day-input-wrapper">
+                <input
+                  type="number"
+                  name="monthly-day"
+                  min="1"
+                  max="31"
+                  placeholder="Day"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
 
-    <template id="daily-expense-template">
-        <div class="expense-item daily-expense">
-            <label>
-                <span>Name:</span>
-                <input type="text" name="daily-name">
-            </label>
-            
-            <label>
-                <span>Amount:</span>
-                <input type="number" name="daily-amount" step="0.01" inputmode="decimal">
-            </label>
-            
-            <button type="button" class="remove-expense">×</button>
-        </div>
-    </template>
+        <template id="weekly-expense-template">
+          <div class="expense-item weekly-expense">
+            <div class="name-row">
+              <input type="text" name="weekly-name" placeholder="Name" />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+              >
+                ×
+              </button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="weekly-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                />
+              </div>
+              <select name="weekly-day">
+                <option value="">Day of Week</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+              </select>
+            </div>
+          </div>
+        </template>
 
-    <fieldset>
-        <legend>Monthly Expenses</legend>
-        <div id="monthly-expenses-container"></div>
-        <button type="button" id="add-monthly-expense">Add Monthly Expense</button>
-    </fieldset>
+        <template id="daily-expense-template">
+          <div class="expense-item daily-expense">
+            <div class="name-row">
+              <input type="text" name="daily-name" placeholder="Name" />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+              >
+                ×
+              </button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="daily-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
 
-    <fieldset>
-        <legend>Weekly Expenses</legend>
-        <div id="weekly-expenses-container"></div>
-        <button type="button" id="add-weekly-expense">Add Weekly Expense</button>
-    </fieldset>
+        <fieldset>
+          <legend>Monthly Expenses</legend>
+          <div id="monthly-expenses-container"></div>
+          <button type="button" id="add-monthly-expense">
+            Add Monthly Expense
+          </button>
+        </fieldset>
 
-    <fieldset>
-        <legend>Daily Expenses</legend>
-        <div id="daily-expenses-container"></div>
-        <button type="button" id="add-daily-expense">Add Daily Expense</button>
-    </fieldset>
+        <fieldset>
+          <legend>Weekly Expenses</legend>
+          <div id="weekly-expenses-container"></div>
+          <button type="button" id="add-weekly-expense">
+            Add Weekly Expense
+          </button>
+        </fieldset>
 
-    <fieldset>
-        <legend>Totals</legend>
-        <div>
-            <label>Monthly Total: £<span id="monthly-total">0.00</span></label>
-        </div>
-        <hr>
-        <div>
-          <label>Pay day:
-            <input type="number" name="pay-day" step="1" min="1" max="31" value="25">
-          </label>
-        </div>
-        <div>
-            <label>Expenses Until Payday: £<span id="payday-total">0.00</span></label>
-        </div>
-    </fieldset>
+        <fieldset>
+          <legend>Daily Expenses</legend>
+          <div id="daily-expenses-container"></div>
+          <button type="button" id="add-daily-expense">
+            Add Daily Expense
+          </button>
+        </fieldset>
 
-    <script>
-        const monthlyTemplate = document.getElementById('monthly-expense-template');
-        const monthlyContainer = document.getElementById('monthly-expenses-container');
-        const addMonthlyButton = document.getElementById('add-monthly-expense');
+        <script>
+          // Constants
+          const EXPENSE_TYPES = {
+            MONTHLY: "monthly",
+            WEEKLY: "weekly",
+            DAILY: "daily",
+          };
 
-        const weeklyTemplate = document.getElementById('weekly-expense-template');
-        const weeklyContainer = document.getElementById('weekly-expenses-container');
-        const addWeeklyButton = document.getElementById('add-weekly-expense');
+          const DAYS_IN_MONTH = 31;
+          const DAYS_IN_WEEK = 7;
+          const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-        const dailyTemplate = document.getElementById('daily-expense-template');
-        const dailyContainer = document.getElementById('daily-expenses-container');
-        const addDailyButton = document.getElementById('add-daily-expense');
+          const DAY_MAP = {
+            sunday: 0,
+            monday: 1,
+            tuesday: 2,
+            wednesday: 3,
+            thursday: 4,
+            friday: 5,
+            saturday: 6,
+          };
 
-        addMonthlyButton.addEventListener('click', () => {
-            const clone = monthlyTemplate.content.cloneNode(true);
-            monthlyContainer.appendChild(clone);
-            saveToLocalStorage();
-        });
+          // Cache DOM elements
+          const elements = {
+            form: document.getElementById("budget-form"),
+            monthlyTemplate: document.getElementById(
+              "monthly-expense-template"
+            ),
+            monthlyContainer: document.getElementById(
+              "monthly-expenses-container"
+            ),
+            addMonthlyButton: document.getElementById("add-monthly-expense"),
+            weeklyTemplate: document.getElementById("weekly-expense-template"),
+            weeklyContainer: document.getElementById(
+              "weekly-expenses-container"
+            ),
+            addWeeklyButton: document.getElementById("add-weekly-expense"),
+            dailyTemplate: document.getElementById("daily-expense-template"),
+            dailyContainer: document.getElementById("daily-expenses-container"),
+            addDailyButton: document.getElementById("add-daily-expense"),
+            monthlyTotal: document.getElementById("monthly-total"),
+            paydayTotal: document.getElementById("payday-total"),
+            payDayInput: document.querySelector('input[name="pay-day"]'),
+          };
 
-        addWeeklyButton.addEventListener('click', () => {
-            const clone = weeklyTemplate.content.cloneNode(true);
-            weeklyContainer.appendChild(clone);
-            saveToLocalStorage();
-        });
+          // Currency formatter
+          const formatCurrency = (amount) =>
+            new Intl.NumberFormat("en-GB", {
+              style: "currency",
+              currency: "GBP",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(amount);
 
-        addDailyButton.addEventListener('click', () => {
-            const clone = dailyTemplate.content.cloneNode(true);
-            dailyContainer.appendChild(clone);
-            saveToLocalStorage();
-        });
+          // Helper function to create expense items
+          const createExpenseItem = (template, data = {}) => {
+            const clone = template.content.cloneNode(true);
 
-        monthlyContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-expense')) {
-                e.target.parentElement.remove();
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
-
-        weeklyContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-expense')) {
-                e.target.parentElement.remove();
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
-
-        dailyContainer.addEventListener('click', (e) => {
-            if (e.target.classList.contains('remove-expense')) {
-                e.target.parentElement.remove();
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
-
-        // Function to calculate and update totals
-        function updateTotals() {
-            // Calculate total monthly cost (31-day period)
-            let monthlyTotal = 0;
-            
-            // Add monthly expenses (occur once per month)
-            const monthlyAmounts = monthlyContainer.querySelectorAll('input[name="monthly-amount"]');
-            monthlyAmounts.forEach(input => {
-                const value = parseFloat(input.value) || 0;
-                monthlyTotal += value;
+            Object.entries(data).forEach(([key, value]) => {
+              const input = clone.querySelector(`[name="${key}"]`);
+              if (input) input.value = value;
             });
 
-            // Add weekly expenses (occur ~4.43 times per month: 31/7)
-            const weeklyAmounts = weeklyContainer.querySelectorAll('input[name="weekly-amount"]');
-            weeklyAmounts.forEach(input => {
-                const value = parseFloat(input.value) || 0;
-                monthlyTotal += value * (31 / 7);
-            });
+            return clone;
+          };
 
-            // Add daily expenses (occur 31 times per month)
-            const dailyAmounts = dailyContainer.querySelectorAll('input[name="daily-amount"]');
-            dailyAmounts.forEach(input => {
-                const value = parseFloat(input.value) || 0;
-                monthlyTotal += value * 31;
-            });
+          // Update totals and save data
+          const updateAndSave = () => {
+            updateTotals();
+            saveToLocalStorage();
+          };
+
+          // Event listeners
+          const { form, addMonthlyButton, addWeeklyButton, addDailyButton } =
+            elements;
+
+          // Single event listeners for form changes
+          ["input", "change"].forEach((eventType) =>
+            form.addEventListener(eventType, updateAndSave)
+          );
+
+          // Add expense functions using arrow functions and destructuring
+          const addExpenseHandlers = {
+            monthly: () => {
+              const clone = createExpenseItem(elements.monthlyTemplate);
+              elements.monthlyContainer.appendChild(clone);
+              updateAndSave();
+            },
+            weekly: () => {
+              const clone = createExpenseItem(elements.weeklyTemplate);
+              elements.weeklyContainer.appendChild(clone);
+              updateAndSave();
+            },
+            daily: () => {
+              const clone = createExpenseItem(elements.dailyTemplate);
+              elements.dailyContainer.appendChild(clone);
+              updateAndSave();
+            },
+          };
+
+          // Attach event listeners
+          addMonthlyButton.addEventListener(
+            "click",
+            addExpenseHandlers.monthly
+          );
+          addWeeklyButton.addEventListener("click", addExpenseHandlers.weekly);
+          addDailyButton.addEventListener("click", addExpenseHandlers.daily);
+
+          // Remove expense handling using event delegation
+          form.addEventListener("click", ({ target }) => {
+            if (target.classList.contains("remove-expense")) {
+              target.closest(".expense-item").remove();
+              updateAndSave();
+            }
+          });
+
+          // Function to calculate and update totals
+          const updateTotals = () => {
+            const formData = new FormData(elements.form);
+
+            // Calculate total monthly cost using reduce and modern syntax
+            const monthlyTotal = [...formData.entries()]
+              .filter(([name]) => name.endsWith("-amount"))
+              .reduce((total, [name, value]) => {
+                const numValue = parseFloat(value) || 0;
+
+                // Use template literals and object lookup
+                const multipliers = {
+                  [`${EXPENSE_TYPES.MONTHLY}-amount`]: 1,
+                  [`${EXPENSE_TYPES.WEEKLY}-amount`]:
+                    DAYS_IN_MONTH / DAYS_IN_WEEK,
+                  [`${EXPENSE_TYPES.DAILY}-amount`]: DAYS_IN_MONTH,
+                };
+
+                return total + numValue * (multipliers[name] || 0);
+              }, 0);
 
             // Calculate expenses until payday
-            const payDayInput = document.querySelector('input[name="pay-day"]');
-            const payDay = parseInt(payDayInput.value) || 25;
+            const payDay = parseInt(formData.get("pay-day")) || 25;
             const paydayTotal = calculateExpensesUntilPayday(payDay);
 
-            // Update the display
-            document.getElementById('monthly-total').textContent = monthlyTotal.toFixed(2);
-            document.getElementById('payday-total').textContent = paydayTotal.toFixed(2);
-        }
+            // Update the display using cached elements
+            elements.monthlyTotal.textContent = formatCurrency(monthlyTotal);
+            elements.paydayTotal.textContent = formatCurrency(paydayTotal);
+          };
 
-        function calculateExpensesUntilPayday(payDay) {
+          const calculateExpensesUntilPayday = (payDay) => {
             const today = new Date();
-            const currentDay = today.getDate();
-            const currentMonth = today.getMonth();
-            const currentYear = today.getFullYear();
-            
-            // Determine payday date
-            let payDayDate = new Date(currentYear, currentMonth, payDay);
-            
-            // If payday has already passed this month, move to next month
-            if (payDay <= currentDay) {
-                payDayDate = new Date(currentYear, currentMonth + 1, payDay);
-            }
-            
-            let totalExpenses = 0;
-            
-            // Calculate daily expenses (every day until payday, excluding payday unless today is payday)
-            const dailyExpenses = dailyContainer.querySelectorAll('.expense-item');
-            dailyExpenses.forEach(expense => {
-                const amountInput = expense.querySelector('input[name="daily-amount"]');
-                const amount = parseFloat(amountInput.value) || 0;
-                
-                // Calculate days until payday (excluding payday itself unless today is payday)
-                let daysUntilPayday = Math.ceil((payDayDate - today) / (1000 * 60 * 60 * 24));
-                
-                // If today is payday, include today's expense
-                if (currentDay === payDay && payDayDate.getMonth() === currentMonth) {
-                    daysUntilPayday = 1;
-                }
-                
-                totalExpenses += amount * Math.max(0, daysUntilPayday);
-            });
-            
-            // Calculate weekly expenses
-            const weeklyExpenses = weeklyContainer.querySelectorAll('.expense-item');
-            weeklyExpenses.forEach(expense => {
-                const amountInput = expense.querySelector('input[name="weekly-amount"]');
-                const daySelect = expense.querySelector('select[name="weekly-day"]');
-                const amount = parseFloat(amountInput.value) || 0;
-                const dayOfWeek = daySelect.value;
-                
-                if (dayOfWeek) {
-                    const dayMap = {
-                        'sunday': 0, 'monday': 1, 'tuesday': 2, 'wednesday': 3,
-                        'thursday': 4, 'friday': 5, 'saturday': 6
-                    };
-                    
-                    const targetDay = dayMap[dayOfWeek];
-                    let nextOccurrence = new Date(today);
-                    
-                    // Find next occurrence of this day
-                    while (nextOccurrence.getDay() !== targetDay || nextOccurrence <= today) {
-                        nextOccurrence.setDate(nextOccurrence.getDate() + 1);
-                    }
-                    
-                    // Count how many times this day occurs before payday (not including payday)
-                    let occurrences = 0;
-                    while (nextOccurrence < payDayDate) {
-                        occurrences++;
-                        nextOccurrence.setDate(nextOccurrence.getDate() + 7);
-                    }
-                    
-                    totalExpenses += amount * occurrences;
-                }
-            });
-            
-            // Calculate monthly expenses
-            const monthlyExpenses = monthlyContainer.querySelectorAll('.expense-item');
-            monthlyExpenses.forEach(expense => {
-                const amountInput = expense.querySelector('input[name="monthly-amount"]');
-                const dayInput = expense.querySelector('input[name="monthly-day"]');
-                const amount = parseFloat(amountInput.value) || 0;
-                const dayOfMonth = parseInt(dayInput.value) || 1;
-                
-                // Check if this monthly expense occurs before payday (not on payday)
-                const expenseDate = new Date(currentYear, currentMonth, dayOfMonth);
-                
-                // If the expense day has passed this month, check next month
-                if (dayOfMonth <= currentDay) {
-                    expenseDate.setMonth(expenseDate.getMonth() + 1);
-                }
-                
-                // If expense occurs before payday (not on payday), include it
-                if (expenseDate < payDayDate) {
-                    totalExpenses += amount;
-                }
-            });
-            
-            return totalExpenses;
-        }
-
-        // Function to save data to localStorage
-        function saveToLocalStorage() {
-            const data = {
-                monthlyExpenses: [],
-                weeklyExpenses: [],
-                dailyExpenses: [],
-                payDay: document.querySelector('input[name="pay-day"]').value
+            const { currentDay, currentMonth, currentYear } = {
+              currentDay: today.getDate(),
+              currentMonth: today.getMonth(),
+              currentYear: today.getFullYear(),
             };
 
-            // Save monthly expenses
-            monthlyContainer.querySelectorAll('.expense-item').forEach(expense => {
-                const name = expense.querySelector('input[name="monthly-name"]').value;
-                const amount = expense.querySelector('input[name="monthly-amount"]').value;
-                const day = expense.querySelector('input[name="monthly-day"]').value;
-                data.monthlyExpenses.push({ name, amount, day });
-            });
+            // Determine payday date using ternary operator
+            const payDayDate =
+              payDay <= currentDay
+                ? new Date(currentYear, currentMonth + 1, payDay)
+                : new Date(currentYear, currentMonth, payDay);
 
-            // Save weekly expenses
-            weeklyContainer.querySelectorAll('.expense-item').forEach(expense => {
-                const name = expense.querySelector('input[name="weekly-name"]').value;
-                const amount = expense.querySelector('input[name="weekly-amount"]').value;
-                const day = expense.querySelector('select[name="weekly-day"]').value;
-                data.weeklyExpenses.push({ name, amount, day });
-            });
+            // Helper function to get expense amount
+            const getExpenseAmount = (expense, selector) =>
+              parseFloat(expense.querySelector(selector)?.value || 0);
 
-            // Save daily expenses
-            dailyContainer.querySelectorAll('.expense-item').forEach(expense => {
-                const name = expense.querySelector('input[name="daily-name"]').value;
-                const amount = expense.querySelector('input[name="daily-amount"]').value;
-                data.dailyExpenses.push({ name, amount });
-            });
+            // Calculate daily expenses using modern array methods
+            const dailyExpenses = [
+              ...elements.dailyContainer.querySelectorAll(".expense-item"),
+            ].reduce((total, expense) => {
+              const amount = getExpenseAmount(
+                expense,
+                'input[name="daily-amount"]'
+              );
 
-            localStorage.setItem('budgetData', JSON.stringify(data));
-        }
+              let daysUntilPayday = Math.ceil(
+                (payDayDate - today) / MS_PER_DAY
+              );
 
-        // Function to load data from localStorage
-        function loadFromLocalStorage() {
-            const savedData = localStorage.getItem('budgetData');
-            if (!savedData) return;
+              // Handle edge case where today is payday
+              if (
+                currentDay === payDay &&
+                payDayDate.getMonth() === currentMonth
+              ) {
+                daysUntilPayday = 1;
+              }
 
-            const data = JSON.parse(savedData);
+              return total + amount * Math.max(0, daysUntilPayday);
+            }, 0);
 
-            // Load payday
-            if (data.payDay) {
-                document.querySelector('input[name="pay-day"]').value = data.payDay;
+            // Calculate weekly expenses
+            const weeklyExpenses = [
+              ...elements.weeklyContainer.querySelectorAll(".expense-item"),
+            ].reduce((total, expense) => {
+              const amount = getExpenseAmount(
+                expense,
+                'input[name="weekly-amount"]'
+              );
+              const dayOfWeek = expense.querySelector(
+                'select[name="weekly-day"]'
+              )?.value;
+
+              if (!dayOfWeek) return total;
+
+              const targetDay = DAY_MAP[dayOfWeek];
+              let nextOccurrence = new Date(today);
+
+              // Find next occurrence of this day
+              while (
+                nextOccurrence.getDay() !== targetDay ||
+                nextOccurrence <= today
+              ) {
+                nextOccurrence.setDate(nextOccurrence.getDate() + 1);
+              }
+
+              // Count occurrences before payday
+              let occurrences = 0;
+              while (nextOccurrence < payDayDate) {
+                occurrences++;
+                nextOccurrence.setDate(nextOccurrence.getDate() + DAYS_IN_WEEK);
+              }
+
+              return total + amount * occurrences;
+            }, 0);
+
+            // Calculate monthly expenses
+            const monthlyExpenses = [
+              ...elements.monthlyContainer.querySelectorAll(".expense-item"),
+            ].reduce((total, expense) => {
+              const amount = getExpenseAmount(
+                expense,
+                'input[name="monthly-amount"]'
+              );
+              const dayOfMonth = parseInt(
+                expense.querySelector('input[name="monthly-day"]')?.value || 1
+              );
+
+              // Create expense date
+              const expenseDate = new Date(
+                currentYear,
+                currentMonth,
+                dayOfMonth
+              );
+
+              // Adjust to next month if day has passed
+              if (dayOfMonth <= currentDay) {
+                expenseDate.setMonth(expenseDate.getMonth() + 1);
+              }
+
+              // Include if occurs before payday
+              return expenseDate < payDayDate ? total + amount : total;
+            }, 0);
+
+            return dailyExpenses + weeklyExpenses + monthlyExpenses;
+          };
+
+          // Function to extract expense data from DOM elements
+          const extractExpenseData = (container, fields) =>
+            [...container.querySelectorAll(".expense-item")]
+              .map((expense) => {
+                const data = fields.reduce((acc, field) => {
+                  const element = expense.querySelector(`[name="${field}"]`);
+                  acc[field.split("-").pop()] = element?.value || "";
+                  return acc;
+                }, {});
+
+                // Only return if at least one field has data
+                return Object.values(data).some(Boolean) ? data : null;
+              })
+              .filter(Boolean);
+
+          // Function to save data to localStorage
+          const saveToLocalStorage = () => {
+            try {
+              const data = {
+                monthlyExpenses: extractExpenseData(elements.monthlyContainer, [
+                  "monthly-name",
+                  "monthly-amount",
+                  "monthly-day",
+                ]),
+                weeklyExpenses: extractExpenseData(elements.weeklyContainer, [
+                  "weekly-name",
+                  "weekly-amount",
+                  "weekly-day",
+                ]),
+                dailyExpenses: extractExpenseData(elements.dailyContainer, [
+                  "daily-name",
+                  "daily-amount",
+                ]),
+                payDay: new FormData(elements.form).get("pay-day"),
+              };
+
+              localStorage.setItem("budgetData", JSON.stringify(data));
+            } catch (error) {
+              console.error("Failed to save data to localStorage:", error);
             }
+          };
 
-            // Load monthly expenses
-            data.monthlyExpenses.forEach(expense => {
-                const clone = monthlyTemplate.content.cloneNode(true);
-                clone.querySelector('input[name="monthly-name"]').value = expense.name;
-                clone.querySelector('input[name="monthly-amount"]').value = expense.amount;
-                clone.querySelector('input[name="monthly-day"]').value = expense.day;
-                monthlyContainer.appendChild(clone);
-            });
+          // Function to load data from localStorage
+          const loadFromLocalStorage = () => {
+            try {
+              const savedData = localStorage.getItem("budgetData");
+              if (!savedData) return;
 
-            // Load weekly expenses
-            data.weeklyExpenses.forEach(expense => {
-                const clone = weeklyTemplate.content.cloneNode(true);
-                clone.querySelector('input[name="weekly-name"]').value = expense.name;
-                clone.querySelector('input[name="weekly-amount"]').value = expense.amount;
-                clone.querySelector('select[name="weekly-day"]').value = expense.day;
-                weeklyContainer.appendChild(clone);
-            });
+              const data = JSON.parse(savedData);
 
-            // Load daily expenses
-            data.dailyExpenses.forEach(expense => {
-                const clone = dailyTemplate.content.cloneNode(true);
-                clone.querySelector('input[name="daily-name"]').value = expense.name;
-                clone.querySelector('input[name="daily-amount"]').value = expense.amount;
-                dailyContainer.appendChild(clone);
-            });
+              // Load payday using optional chaining
+              if (data.payDay) {
+                elements.payDayInput.value = data.payDay;
+              }
 
-            // Update totals after loading
-            updateTotals();
-        }
+              // Helper function to load expenses
+              const loadExpenses = (expenses, template, container, type) => {
+                expenses?.forEach((expense) => {
+                  const clone = createExpenseItem(template, {
+                    [`${type}-name`]: expense.name,
+                    [`${type}-amount`]: expense.amount,
+                    [`${type}-day`]: expense.day,
+                  });
+                  container.appendChild(clone);
+                });
+              };
 
-        // Add event listeners to update totals when amounts change
-        monthlyContainer.addEventListener('input', (e) => {
-            if (e.target.name === 'monthly-amount' || e.target.name === 'monthly-day' || e.target.name === 'monthly-name') {
-                updateTotals();
-                saveToLocalStorage();
+              // Load all expense types using destructuring
+              const { monthlyExpenses, weeklyExpenses, dailyExpenses } = data;
+
+              loadExpenses(
+                monthlyExpenses,
+                elements.monthlyTemplate,
+                elements.monthlyContainer,
+                EXPENSE_TYPES.MONTHLY
+              );
+              loadExpenses(
+                weeklyExpenses,
+                elements.weeklyTemplate,
+                elements.weeklyContainer,
+                EXPENSE_TYPES.WEEKLY
+              );
+              loadExpenses(
+                dailyExpenses,
+                elements.dailyTemplate,
+                elements.dailyContainer,
+                EXPENSE_TYPES.DAILY
+              );
+
+              // Update totals after loading
+              updateTotals();
+            } catch (error) {
+              console.error("Failed to load data from localStorage:", error);
             }
-        });
+          };
 
-        weeklyContainer.addEventListener('input', (e) => {
-            if (e.target.name === 'weekly-amount' || e.target.name === 'weekly-name') {
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
+          // Load saved data when page loads
+          loadFromLocalStorage();
+        </script>
+      </form>
 
-        weeklyContainer.addEventListener('change', (e) => {
-            if (e.target.name === 'weekly-day') {
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
-
-        dailyContainer.addEventListener('input', (e) => {
-            if (e.target.name === 'daily-amount' || e.target.name === 'daily-name') {
-                updateTotals();
-                saveToLocalStorage();
-            }
-        });
-
-        // Update totals when payday changes
-        document.querySelector('input[name="pay-day"]').addEventListener('input', () => {
-            updateTotals();
-            saveToLocalStorage();
-        });
-
-        // Load saved data when page loads
-        loadFromLocalStorage();
-    </script>
-
-    <footer>
+      <footer>
         <div class="copyright">© Remi Shergold</div>
         <div class="tagline">My first vibe coded app</div>
-    </footer>
-</body>
+      </footer>
+    </div>
+  </body>
 </html>
