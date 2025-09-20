@@ -6,25 +6,32 @@
     <title>Budget App</title>
     <style>
       :root {
-        /* Colors */
-        --primary-color: #698eb6;
-        --primary-hover: #0056b3;
-        --primary-active: #004494;
-        --background-color: #f5f5f7;
-        --surface-color: white;
-        --text-primary: #1d1d1f;
-        --text-secondary: #424245;
-        --text-muted: #6e6e73;
-        --border-color: #d2d2d7;
-        --border-light: #e5e5e7;
-        --remove-button-bg: #e5e5e7;
-        --remove-button-hover: #ff3b30;
-        --remove-button-active: #d70015;
-        --gradient-start: #667eea;
-        --gradient-end: #764ba2;
-        --legend-bg-start: #f0f0f0;
-        --legend-bg-end: #c8c8c8;
-        --legend-border: #999;
+        /* iOS Colors */
+        --ios-blue: #007aff;
+        --ios-blue-light: #5ac8fa;
+        --ios-blue-dark: #0051d0;
+        --ios-red: #ff3b30;
+        --ios-red-light: #ff6961;
+        --ios-red-dark: #d70015;
+        --ios-green: #34c759;
+        --ios-orange: #ff9500;
+        --ios-purple: #af52de;
+        --ios-gray: #8e8e93;
+        --ios-gray-light: #c7c7cc;
+        --ios-gray-ultralight: #f2f2f7;
+        --ios-separator: rgba(60, 60, 67, 0.36);
+
+        /* iOS Backgrounds */
+        --ios-background: #f2f2f7;
+        --ios-grouped-background: #ffffff;
+        --ios-secondary-background: #ffffff;
+        --ios-tertiary-background: #f2f2f7;
+
+        /* iOS Text Colors */
+        --ios-label: #000000;
+        --ios-secondary-label: rgba(60, 60, 67, 0.6);
+        --ios-tertiary-label: rgba(60, 60, 67, 0.3);
+        --ios-quaternary-label: rgba(60, 60, 67, 0.18);
 
         /* Spacing */
         --spacing-xs: 0.25rem;
@@ -32,37 +39,30 @@
         --spacing-md: 0.75rem;
         --spacing-lg: 1rem;
         --spacing-xl: 1.25rem;
-        --spacing-2xl: 2.5rem;
+        --spacing-2xl: 2rem;
         --spacing-3xl: 3rem;
 
-        /* Border radius */
-        --radius-sm: 0.5rem;
-        --radius-md: 0.75rem;
+        /* iOS Border radius */
+        --ios-radius: 0.625rem;
+        --ios-radius-large: 1rem;
+        --ios-radius-xl: 1.25rem;
 
-        /* Borders */
-        --border-thin: 0.0625rem;
-        --border-thick: 0.125rem;
+        /* iOS Typography */
+        --ios-title1: 1.75rem;
+        --ios-title2: 1.375rem;
+        --ios-title3: 1.25rem;
+        --ios-headline: 1.063rem;
+        --ios-body: 1rem;
+        --ios-callout: 1rem;
+        --ios-subhead: 0.938rem;
+        --ios-footnote: 0.813rem;
+        --ios-caption1: 0.75rem;
+        --ios-caption2: 0.688rem;
 
-        /* Typography */
-        --font-size-sm: 0.875rem;
-        --font-size-base: 1rem;
-        --font-size-lg: 1.125rem;
-        --font-weight-medium: 500;
-        --font-weight-semibold: 600;
-        --font-weight-bold: 700;
-
-        /* Component sizes */
-        --button-size: 2.75rem;
-        --input-padding: var(--spacing-md);
-        --prefix-offset: 1.75rem;
-        --day-prefix-offset: var(--spacing-3xl);
-
-        /* Shadows */
-        --shadow-sm: 0 var(--border-thick) var(--spacing-sm) rgba(0, 0, 0, 0.1);
-        --shadow-focus: 0 0 0 var(--border-thick) rgba(0, 122, 255, 0.1);
-        --shadow-focus-white: 0 0 0 0.1875rem rgba(255, 255, 255, 0.3);
-        --shadow-legend: inset 0 var(--border-thin) 0 rgba(255, 255, 255, 0.6),
-          0 var(--border-thick) var(--spacing-xs) rgba(0, 0, 0, 0.2);
+        /* iOS Shadows */
+        --ios-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --ios-shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07);
+        --ios-shadow-large: 0 10px 25px rgba(0, 0, 0, 0.15);
       }
 
       * {
@@ -72,61 +72,70 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
-        background-color: var(--background-color);
-        color: var(--text-primary);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Text", sans-serif;
+        background: var(--ios-background);
+        color: var(--ios-label);
         line-height: 1.4;
-        padding: var(--spacing-lg);
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      /* Center app on desktop with max width */
+      /* iOS-style app container */
       .app-container {
-        max-width: 30rem;
+        max-width: 26rem;
         margin: 0 auto;
-      }
-
-      fieldset {
-        border: var(--border-thick) solid var(--border-color);
-        border-radius: var(--radius-md);
-        margin-bottom: var(--spacing-xl);
+        background: var(--ios-background);
+        min-height: 100vh;
         padding: var(--spacing-lg);
-        background: var(--surface-color);
-        box-shadow: var(--shadow-sm);
       }
 
+      /* iOS-style sections */
+      fieldset {
+        border: none;
+        border-radius: var(--ios-radius);
+        margin-bottom: var(--spacing-2xl);
+        padding: 0;
+        background: var(--ios-grouped-background);
+        box-shadow: var(--ios-shadow-light);
+        overflow: hidden;
+      }
+
+      /* iOS-style section headers */
       legend {
-        font-weight: bold;
-        font-size: var(--font-size-base);
-        color: var(--text-primary);
-        padding: var(--spacing-xs) var(--spacing-md);
-        background: linear-gradient(
-          to bottom,
-          var(--legend-bg-start) 0%,
-          var(--legend-bg-end) 100%
-        );
-        border: var(--border-thick) solid var(--legend-border);
-        border-radius: var(--radius-sm);
-        text-shadow: 0 var(--border-thin) 0 rgba(255, 255, 255, 0.8);
-        box-shadow: var(--shadow-legend);
+        width: 100%;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        background: var(--ios-grouped-background);
+        color: var(--ios-label);
+        font-size: var(--ios-title3);
+        font-weight: 600;
+        border: none;
+        border-radius: 0;
+        text-shadow: none;
+        box-shadow: none;
+        border-bottom: 1px solid var(--ios-separator);
+        margin-bottom: 0;
       }
 
+      /* iOS-style list items */
       .expense-item {
-        border-bottom: var(--border-thin) solid var(--border-light);
-        margin-bottom: var(--spacing-md);
-        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--ios-separator);
+        padding: var(--spacing-lg) var(--spacing-xl);
+        background: var(--ios-grouped-background);
         position: relative;
       }
 
       .expense-item:last-child {
         border-bottom: none;
-        margin-bottom: 0;
       }
 
+      /* iOS-style input rows */
       .name-row {
-        margin-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-lg);
         display: flex;
-        gap: var(--spacing-sm);
+        align-items: center;
+        gap: var(--spacing-lg);
       }
 
       .name-row input {
@@ -139,7 +148,8 @@
 
       .details-row {
         display: flex;
-        gap: var(--spacing-sm);
+        gap: var(--spacing-lg);
+        align-items: center;
       }
 
       .details-row input,
@@ -158,76 +168,81 @@
         min-width: 0;
       }
 
+      /* iOS-style text-only remove button */
       .expense-item .remove-expense {
-        width: var(--button-size);
-        height: var(--button-size);
-        border-radius: var(--radius-sm);
-        background: var(--remove-button-bg);
-        color: var(--text-muted);
+        width: auto;
+        height: auto;
+        border-radius: 0;
+        background: transparent;
+        color: var(--ios-red);
         border: none;
-        font-size: var(--font-size-base);
-        font-weight: bold;
+        font-size: var(--ios-body);
+        font-weight: 400;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0;
+        padding: var(--spacing-sm) var(--spacing-md);
         margin: 0;
         line-height: 1;
-        box-sizing: border-box;
-        min-width: var(--button-size);
-        min-height: var(--button-size);
-        transition: background-color 0.2s, color 0.2s, transform 0.1s;
+        transition: all 0.2s ease;
+        opacity: 0.8;
+        flex-shrink: 0;
       }
 
       .expense-item .remove-expense:hover {
-        background: var(--remove-button-hover);
-        color: var(--surface-color);
-        transform: scale(1.05);
+        background: transparent;
+        color: var(--ios-red-dark);
+        opacity: 1;
       }
 
       .expense-item .remove-expense:active {
-        background: var(--remove-button-active);
-        color: var(--surface-color);
         transform: scale(0.95);
+        opacity: 0.6;
       }
 
+      /* iOS-style labels */
       label {
         display: block;
         margin-bottom: var(--spacing-sm);
-        font-weight: var(--font-weight-medium);
-        color: var(--text-secondary);
+        font-weight: 400;
+        color: var(--ios-secondary-label);
+        font-size: var(--ios-footnote);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
+      /* iOS-style inputs */
       input,
       select {
         width: 100%;
-        padding: var(--input-padding);
-        border: var(--border-thin) solid var(--border-color);
-        border-radius: var(--radius-sm);
-        font-size: var(--font-size-base);
-        background: var(--surface-color);
+        padding: var(--spacing-lg);
+        border: none;
+        border-radius: var(--ios-radius);
+        font-size: var(--ios-body);
+        background: var(--ios-tertiary-background);
+        color: var(--ios-label);
         -webkit-appearance: none;
         appearance: none;
         font-family: inherit;
+        transition: all 0.2s ease;
       }
 
+      /* iOS-style select dropdown */
       select {
-        background-image: linear-gradient(45deg, transparent 50%, #666 50%),
-          linear-gradient(135deg, #666 50%, transparent 50%);
-        background-position: calc(100% - var(--spacing-xl))
-            calc(1em + var(--border-thick)),
-          calc(100% - 0.9375rem) calc(1em + var(--border-thick));
-        background-size: 0.3125rem 0.3125rem, 0.3125rem 0.3125rem;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007aff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
         background-repeat: no-repeat;
-        padding-right: 2.1875rem;
+        background-position: right var(--spacing-lg) center;
+        background-size: 1rem;
+        padding-right: 3rem;
       }
 
       input[name="pay-day"] {
-        width: 4rem;
+        width: 5rem;
+        text-align: center;
       }
 
-      /* Add £ prefix to amount inputs */
+      /* iOS-style input prefixes */
       .amount-input-wrapper {
         position: relative;
       }
@@ -235,16 +250,16 @@
       .amount-input-wrapper::before {
         content: "£";
         position: absolute;
-        left: var(--spacing-md);
+        left: var(--spacing-lg);
         top: 50%;
         transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: var(--font-size-base);
+        color: var(--ios-secondary-label);
+        font-size: var(--ios-body);
+        font-weight: 500;
         pointer-events: none;
         z-index: 1;
       }
 
-      /* Add day prefix to monthly-day inputs */
       .day-input-wrapper {
         position: relative;
       }
@@ -252,172 +267,204 @@
       .day-input-wrapper::before {
         content: "Day:";
         position: absolute;
-        left: var(--spacing-md);
+        left: var(--spacing-lg);
         top: 50%;
         transform: translateY(-50%);
-        color: var(--text-muted);
-        font-size: var(--font-size-base);
+        color: var(--ios-secondary-label);
+        font-size: var(--ios-body);
+        font-weight: 500;
         pointer-events: none;
         z-index: 1;
       }
 
       input[name$="-amount"] {
-        padding-left: var(--prefix-offset);
+        padding-left: 2.5rem;
       }
 
       input[name="monthly-day"] {
-        padding-left: var(--day-prefix-offset);
+        padding-left: 3.5rem;
       }
 
+      /* iOS-style focus states */
       input:focus,
       select:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: var(--shadow-focus);
+        background: white;
+        box-shadow: 0 0 0 2px var(--ios-blue);
+        transform: scale(1.02);
       }
 
+      /* iOS-style buttons */
       button:not(.remove-expense) {
         width: 100%;
-        padding: 0.875rem;
-        background: var(--primary-color);
-        color: var(--surface-color);
+        padding: var(--spacing-xl);
+        background: transparent;
+        color: var(--ios-blue);
         border: none;
-        border-radius: var(--radius-sm);
-        font-size: var(--font-size-base);
-        font-weight: var(--font-weight-semibold);
+        border-radius: var(--ios-radius);
+        font-size: var(--ios-body);
+        font-weight: 400;
         cursor: pointer;
-        margin-top: var(--spacing-md);
-        transition: background-color 0.2s;
+        margin: 0;
+        transition: all 0.2s ease;
         font-family: inherit;
       }
 
       button:not(.remove-expense):hover {
-        background: var(--primary-hover);
+        background: rgba(0, 122, 255, 0.1);
+        color: var(--ios-blue-dark);
       }
 
       button:not(.remove-expense):active {
-        background: var(--primary-active);
+        transform: scale(0.98);
+        background: rgba(0, 122, 255, 0.2);
       }
 
+      /* Container spacing */
       #monthly-expenses-container,
       #weekly-expenses-container,
       #daily-expenses-container {
-        margin-bottom: var(--spacing-md);
+        margin-bottom: 0;
       }
 
-      /* Totals section styling */
+      /* iOS-style totals section */
       .totals-fieldset {
         background: linear-gradient(
           135deg,
-          var(--gradient-start) 0%,
-          var(--gradient-end) 100%
+          var(--ios-blue) 0%,
+          var(--ios-purple) 100%
         );
-        color: var(--surface-color);
-        border-color: var(--gradient-start);
+        color: white;
+        border: none;
+        box-shadow: 0 8px 32px rgba(0, 122, 255, 0.3);
+      }
+
+      .totals-fieldset legend {
+        background: transparent;
+        color: white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: var(--ios-title2);
+        font-weight: 700;
+        position: static;
+        margin: 0;
+        padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg)
+          var(--spacing-xl);
       }
 
       .totals-fieldset label {
-        color: var(--surface-color);
-        font-size: var(--font-size-base);
-        margin-bottom: var(--spacing-md);
+        color: white;
+        font-size: var(--ios-body);
+        margin-bottom: var(--spacing-lg);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 var(--spacing-xl);
+        text-transform: none;
+        letter-spacing: normal;
       }
 
       .totals-fieldset span {
-        font-weight: var(--font-weight-bold);
-        font-size: var(--font-size-lg);
+        font-weight: 700;
+        font-size: var(--ios-title3);
       }
 
       .totals-fieldset input {
-        background: rgba(255, 255, 255, 0.9);
-        border: var(--border-thin) solid rgba(255, 255, 255, 0.3);
-        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        backdrop-filter: blur(10px);
       }
 
       .totals-fieldset input:focus {
-        background: var(--surface-color);
-        border-color: var(--surface-color);
-        box-shadow: var(--shadow-focus-white);
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+      }
+
+      .totals-fieldset input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
       }
 
       hr {
         border: none;
-        height: var(--border-thin);
-        background: rgba(255, 255, 255, 0.3);
-        margin: var(--spacing-lg) 0;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: var(--spacing-lg) var(--spacing-xl);
       }
 
-      /* Responsive improvements */
+      /* iOS-style responsive improvements */
       @media (max-width: 30rem) {
-        body {
+        .app-container {
           padding: var(--spacing-md);
         }
 
         fieldset {
-          padding: var(--spacing-md);
-          margin-bottom: var(--spacing-lg);
+          border-radius: var(--ios-radius);
+          margin-bottom: var(--spacing-xl);
         }
 
         legend {
-          font-size: var(--font-size-sm);
+          font-size: var(--ios-title3);
+          padding: var(--spacing-lg);
+        }
+
+        .expense-item {
+          padding: var(--spacing-lg);
         }
 
         input,
         select,
         button {
-          font-size: var(--font-size-base); /* Prevents zoom on iOS */
+          font-size: var(--ios-body);
         }
       }
 
-      /* Loading animation for better UX */
+      /* iOS-style loading animation */
       .expense-item {
-        animation: slideIn 0.3s ease-out;
+        animation: slideInFromRight 0.3s ease-out;
       }
 
-      @keyframes slideIn {
+      @keyframes slideInFromRight {
         from {
           opacity: 0;
-          transform: translateY(-0.625rem);
+          transform: translateX(20px);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateX(0);
         }
       }
 
-      /* Better spacing for labels containing inputs */
-      label:has(input),
-      label:has(select) {
-        display: block;
-      }
-
-      /* Improve touch targets */
+      /* iOS-style touch improvements */
       button,
       input,
       select {
-        min-height: var(--button-size);
+        min-height: 2.75rem;
+        -webkit-tap-highlight-color: transparent;
       }
 
-      /* Footer styling */
+      /* iOS-style footer */
       footer {
-        margin-top: var(--spacing-2xl);
-        padding: var(--spacing-xl) 0;
-        border-top: var(--border-thin) solid var(--border-color);
+        margin-top: var(--spacing-3xl);
+        padding: var(--spacing-2xl) var(--spacing-xl);
+        background: var(--ios-grouped-background);
+        border-radius: var(--ios-radius);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: var(--font-size-sm);
-        color: var(--text-muted);
+        font-size: var(--ios-footnote);
+        color: var(--ios-secondary-label);
+        box-shadow: var(--ios-shadow-light);
       }
 
       footer .copyright {
-        font-weight: var(--font-weight-medium);
+        font-weight: 600;
+        color: var(--ios-label);
       }
 
       footer .tagline {
         font-style: italic;
+        color: var(--ios-tertiary-label);
       }
 
       @media (max-width: 30rem) {
@@ -425,6 +472,8 @@
           flex-direction: column;
           gap: var(--spacing-sm);
           text-align: center;
+          margin-top: var(--spacing-2xl);
+          padding: var(--spacing-xl);
         }
       }
     </style>
@@ -468,7 +517,7 @@
                 class="remove-expense"
                 aria-label="Remove expense"
               >
-                &times;
+                Delete
               </button>
             </div>
             <div class="details-row">
@@ -504,7 +553,7 @@
                 class="remove-expense"
                 aria-label="Remove expense"
               >
-                &times;
+                Delete
               </button>
             </div>
             <div class="details-row">
@@ -540,7 +589,7 @@
                 class="remove-expense"
                 aria-label="Remove expense"
               >
-                &times;
+                Delete
               </button>
             </div>
             <div class="details-row">
