@@ -88,7 +88,7 @@
         margin: 0 auto;
         background: var(--ios-background);
         min-height: 100vh;
-        padding: var(--spacing-lg);
+        padding: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
       }
 
       /* iOS-style sections */
@@ -168,31 +168,31 @@
         min-width: 0;
       }
 
-      /* iOS-style text-only remove button */
+      /* iOS-style trash icon remove button */
       .expense-item .remove-expense {
-        width: auto;
-        height: auto;
-        border-radius: 0;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: var(--ios-radius);
         background: transparent;
         color: var(--ios-red);
         border: none;
-        font-size: var(--ios-body);
-        font-weight: 400;
+        font-size: 0;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: var(--spacing-sm) var(--spacing-md);
+        padding: 0;
         margin: 0;
-        line-height: 1;
         transition: all 0.2s ease;
         opacity: 0.8;
         flex-shrink: 0;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff3b30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='3,6 5,6 21,6'%3e%3c/polyline%3e%3cpath d='m19,6v14a2,2 0 0 1 -2,2H7a2,2 0 0 1 -2,-2V6m3,0V4a2,2 0 0 1 2,-2h4a2,2 0 0 1 2,2v2'%3e%3c/path%3e%3cline x1='10' y1='11' x2='10' y2='17'%3e%3c/line%3e%3cline x1='14' y1='11' x2='14' y2='17'%3e%3c/line%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 1.25rem;
       }
 
       .expense-item .remove-expense:hover {
-        background: transparent;
-        color: var(--ios-red-dark);
         opacity: 1;
       }
 
@@ -289,7 +289,7 @@
       input:focus,
       select:focus {
         outline: none;
-        background: white;
+        background-color: white;
         box-shadow: 0 0 0 2px var(--ios-blue);
         transform: scale(1.02);
       }
@@ -311,13 +311,12 @@
       }
 
       button:not(.remove-expense):hover {
-        background: rgba(0, 122, 255, 0.1);
         color: var(--ios-blue-dark);
       }
 
       button:not(.remove-expense):active {
-        transform: scale(0.98);
-        background: rgba(0, 122, 255, 0.2);
+        opacity: 0.6;
+        transform: scale(0.95);
       }
 
       /* Container spacing */
@@ -327,62 +326,94 @@
         margin-bottom: 0;
       }
 
-      /* iOS-style totals section */
-      .totals-fieldset {
-        background: linear-gradient(
-          135deg,
-          var(--ios-blue) 0%,
-          var(--ios-purple) 100%
-        );
-        color: white;
-        border: none;
-        box-shadow: 0 8px 32px rgba(0, 122, 255, 0.3);
+      /* Pay day section content */
+      .pay-day-content {
+        padding: var(--spacing-xl);
       }
 
-      .totals-fieldset legend {
-        background: transparent;
-        color: white;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        font-size: var(--ios-title2);
-        font-weight: 700;
-        position: static;
-        margin: 0;
-        padding: var(--spacing-xl) var(--spacing-xl) var(--spacing-lg)
-          var(--spacing-xl);
-      }
-
-      .totals-fieldset label {
-        color: white;
-        font-size: var(--ios-body);
+      /* Pay day explanation text */
+      .pay-day-explanation {
         margin-bottom: var(--spacing-lg);
+        color: var(--ios-label);
+        font-size: var(--ios-body);
+        line-height: 1.5;
+      }
+
+      /* iOS-style app header */
+      .app-header {
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        width: 100vw;
+        background: linear-gradient(135deg, #64b5f6 0%, #a4c0d6 100%);
+        color: var(--ios-label);
+        box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+        margin-bottom: var(--spacing-2xl);
+      }
+
+      .app-header-content {
+        max-width: 26rem;
+        margin: 0 auto;
+        padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl)
+          var(--spacing-lg);
+        text-align: left;
+      }
+
+      .app-header h1 {
+        font-size: var(--ios-title2);
+        font-weight: 600;
+        margin-bottom: var(--spacing-2xl);
+        text-align: left;
+        color: var(--ios-label);
+      }
+
+      .app-header .primary-stat {
+        margin-bottom: var(--spacing-2xl);
+      }
+
+      .app-header .primary-stat-label {
+        font-size: var(--ios-body);
+        color: var(--ios-label);
+        margin-bottom: var(--spacing-sm);
+        font-weight: 400;
+      }
+
+      .app-header .primary-stat-value {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--ios-label);
+        line-height: 1;
+      }
+
+      .app-header .secondary-stat {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 var(--spacing-xl);
-        text-transform: none;
-        letter-spacing: normal;
-      }
-
-      .totals-fieldset span {
-        font-weight: 700;
-        font-size: var(--ios-title3);
-      }
-
-      .totals-fieldset input {
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        color: white;
+        padding: var(--spacing-md) var(--spacing-xl);
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: var(--ios-radius);
         backdrop-filter: blur(10px);
       }
 
-      .totals-fieldset input:focus {
-        background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.6);
-        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+      .app-header .secondary-stat-label {
+        font-size: var(--ios-callout);
+        color: var(--ios-secondary-label);
+        font-weight: 400;
       }
 
-      .totals-fieldset input::placeholder {
-        color: rgba(255, 255, 255, 0.7);
+      .app-header .secondary-stat-value {
+        font-size: var(--ios-callout);
+        font-weight: 600;
+        color: var(--ios-label);
+      }
+
+      .app-header hr {
+        border: none;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: var(--spacing-lg) 0;
       }
 
       hr {
@@ -394,10 +425,6 @@
 
       /* iOS-style responsive improvements */
       @media (max-width: 30rem) {
-        .app-container {
-          padding: var(--spacing-md);
-        }
-
         fieldset {
           border-radius: var(--ios-radius);
           margin-bottom: var(--spacing-xl);
@@ -443,18 +470,23 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-      /* iOS-style footer */
+      /* Webpage-style footer */
       footer {
         margin-top: var(--spacing-3xl);
         padding: var(--spacing-2xl) var(--spacing-xl);
-        background: var(--ios-grouped-background);
-        border-radius: var(--ios-radius);
+        background: transparent;
+        border-top: 1px solid var(--ios-separator);
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: var(--ios-footnote);
         color: var(--ios-secondary-label);
-        box-shadow: var(--ios-shadow-light);
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        width: 100vw;
       }
 
       footer .copyright {
@@ -467,13 +499,24 @@
         color: var(--ios-tertiary-label);
       }
 
+      .footer-content {
+        max-width: 26rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+
       @media (max-width: 30rem) {
         footer {
+          padding: var(--spacing-xl);
+        }
+
+        .footer-content {
           flex-direction: column;
           gap: var(--spacing-sm);
           text-align: center;
-          margin-top: var(--spacing-2xl);
-          padding: var(--spacing-xl);
         }
       }
     </style>
@@ -481,13 +524,144 @@
   <body>
     <div class="app-container">
       <form id="budget-form">
-        <fieldset class="totals-fieldset">
-          <legend>Totals</legend>
-          <div>
-            <label>Monthly Total: <span id="monthly-total">£0.00</span></label>
+        <div class="app-header">
+          <div class="app-header-content">
+            <h1>Expenses</h1>
+
+            <div class="primary-stat">
+              <div class="primary-stat-label">Outstanding</div>
+              <div class="primary-stat-value" id="payday-total">£0.00</div>
+            </div>
+
+            <div class="secondary-stat">
+              <span class="secondary-stat-label">Month total</span>
+              <span class="secondary-stat-value" id="monthly-total">£0.00</span>
+            </div>
           </div>
-          <hr />
-          <div>
+        </div>
+
+        <template id="monthly-expense-template">
+          <div class="expense-item monthly-expense">
+            <div class="name-row">
+              <input
+                type="text"
+                name="monthly-name"
+                placeholder="Name"
+                tabindex="1"
+              />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+                tabindex="4"
+              ></button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="monthly-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                  tabindex="2"
+                />
+              </div>
+              <div class="day-input-wrapper">
+                <input
+                  type="number"
+                  name="monthly-day"
+                  min="1"
+                  max="31"
+                  inputmode="numeric"
+                  placeholder="Day of the month"
+                  tabindex="3"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template id="weekly-expense-template">
+          <div class="expense-item weekly-expense">
+            <div class="name-row">
+              <input
+                type="text"
+                name="weekly-name"
+                placeholder="Name"
+                tabindex="1"
+              />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+                tabindex="4"
+              ></button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="weekly-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                  tabindex="2"
+                />
+              </div>
+              <select name="weekly-day" tabindex="3">
+                <option value="">Day of Week</option>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+            </div>
+          </div>
+        </template>
+
+        <template id="daily-expense-template">
+          <div class="expense-item daily-expense">
+            <div class="name-row">
+              <input
+                type="text"
+                name="daily-name"
+                placeholder="Name"
+                tabindex="1"
+              />
+              <button
+                type="button"
+                class="remove-expense"
+                aria-label="Remove expense"
+                tabindex="3"
+              ></button>
+            </div>
+            <div class="details-row">
+              <div class="amount-input-wrapper">
+                <input
+                  type="number"
+                  name="daily-amount"
+                  step="0.01"
+                  inputmode="decimal"
+                  placeholder="Amount"
+                  tabindex="2"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <fieldset>
+          <legend>Pay Day</legend>
+          <div class="pay-day-content">
+            <p class="pay-day-explanation">
+              Enter the day of the month you receive your salary to calculate
+              how much you'll spend before your next payday. This helps you plan
+              your cash flow and avoid overdrafts.
+            </p>
             <label
               >Pay day:
               <input
@@ -500,111 +674,7 @@
               />
             </label>
           </div>
-          <div>
-            <label
-              >Expenses Until Payday:
-              <span id="payday-total">£0.00</span></label
-            >
-          </div>
         </fieldset>
-
-        <template id="monthly-expense-template">
-          <div class="expense-item monthly-expense">
-            <div class="name-row">
-              <input type="text" name="monthly-name" placeholder="Name" />
-              <button
-                type="button"
-                class="remove-expense"
-                aria-label="Remove expense"
-              >
-                Delete
-              </button>
-            </div>
-            <div class="details-row">
-              <div class="amount-input-wrapper">
-                <input
-                  type="number"
-                  name="monthly-amount"
-                  step="0.01"
-                  inputmode="decimal"
-                  placeholder="Amount"
-                />
-              </div>
-              <div class="day-input-wrapper">
-                <input
-                  type="number"
-                  name="monthly-day"
-                  min="1"
-                  max="31"
-                  inputmode="numeric"
-                  placeholder="Day of the month"
-                />
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <template id="weekly-expense-template">
-          <div class="expense-item weekly-expense">
-            <div class="name-row">
-              <input type="text" name="weekly-name" placeholder="Name" />
-              <button
-                type="button"
-                class="remove-expense"
-                aria-label="Remove expense"
-              >
-                Delete
-              </button>
-            </div>
-            <div class="details-row">
-              <div class="amount-input-wrapper">
-                <input
-                  type="number"
-                  name="weekly-amount"
-                  step="0.01"
-                  inputmode="decimal"
-                  placeholder="Amount"
-                />
-              </div>
-              <select name="weekly-day">
-                <option value="">Day of Week</option>
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-                <option value="saturday">Saturday</option>
-                <option value="sunday">Sunday</option>
-              </select>
-            </div>
-          </div>
-        </template>
-
-        <template id="daily-expense-template">
-          <div class="expense-item daily-expense">
-            <div class="name-row">
-              <input type="text" name="daily-name" placeholder="Name" />
-              <button
-                type="button"
-                class="remove-expense"
-                aria-label="Remove expense"
-              >
-                Delete
-              </button>
-            </div>
-            <div class="details-row">
-              <div class="amount-input-wrapper">
-                <input
-                  type="number"
-                  name="daily-amount"
-                  step="0.01"
-                  inputmode="decimal"
-                  placeholder="Amount"
-                />
-              </div>
-            </div>
-          </div>
-        </template>
 
         <fieldset>
           <legend>Monthly Expenses</legend>
@@ -632,25 +702,9 @@
 
         <script>
           // Constants
-          const EXPENSE_TYPES = {
-            MONTHLY: "monthly",
-            WEEKLY: "weekly",
-            DAILY: "daily",
-          };
-
           const DAYS_IN_MONTH = 31;
           const DAYS_IN_WEEK = 7;
           const MS_PER_DAY = 1000 * 60 * 60 * 24;
-
-          const DAY_MAP = {
-            sunday: 0,
-            monday: 1,
-            tuesday: 2,
-            wednesday: 3,
-            thursday: 4,
-            friday: 5,
-            saturday: 6,
-          };
 
           // Cache DOM elements
           const elements = {
@@ -711,56 +765,39 @@
             form.addEventListener(eventType, updateAndSave)
           );
 
-          // Add expense functions using arrow functions and destructuring
-          const addExpenseHandlers = {
-            monthly: () => {
-              const clone = createExpenseItem(elements.monthlyTemplate);
-              elements.monthlyContainer.appendChild(clone);
-
-              // Focus the name input of the newly added expense
-              const nameInput =
-                elements.monthlyContainer.lastElementChild.querySelector(
-                  'input[name="monthly-name"]'
-                );
-              if (nameInput) nameInput.focus();
-
-              updateAndSave();
-            },
-            weekly: () => {
-              const clone = createExpenseItem(elements.weeklyTemplate);
-              elements.weeklyContainer.appendChild(clone);
-
-              // Focus the name input of the newly added expense
-              const nameInput =
-                elements.weeklyContainer.lastElementChild.querySelector(
-                  'input[name="weekly-name"]'
-                );
-              if (nameInput) nameInput.focus();
-
-              updateAndSave();
-            },
-            daily: () => {
-              const clone = createExpenseItem(elements.dailyTemplate);
-              elements.dailyContainer.appendChild(clone);
-
-              // Focus the name input of the newly added expense
-              const nameInput =
-                elements.dailyContainer.lastElementChild.querySelector(
-                  'input[name="daily-name"]'
-                );
-              if (nameInput) nameInput.focus();
-
-              updateAndSave();
-            },
+          // Add expense functions
+          const addExpense = (template, container, nameSelector) => () => {
+            const clone = createExpenseItem(template);
+            container.appendChild(clone);
+            container.lastElementChild.querySelector(nameSelector)?.focus();
+            updateAndSave();
           };
 
           // Attach event listeners
           addMonthlyButton.addEventListener(
             "click",
-            addExpenseHandlers.monthly
+            addExpense(
+              elements.monthlyTemplate,
+              elements.monthlyContainer,
+              'input[name="monthly-name"]'
+            )
           );
-          addWeeklyButton.addEventListener("click", addExpenseHandlers.weekly);
-          addDailyButton.addEventListener("click", addExpenseHandlers.daily);
+          addWeeklyButton.addEventListener(
+            "click",
+            addExpense(
+              elements.weeklyTemplate,
+              elements.weeklyContainer,
+              'input[name="weekly-name"]'
+            )
+          );
+          addDailyButton.addEventListener(
+            "click",
+            addExpense(
+              elements.dailyTemplate,
+              elements.dailyContainer,
+              'input[name="daily-name"]'
+            )
+          );
 
           // Remove expense handling using event delegation
           form.addEventListener("click", ({ target }) => {
@@ -775,21 +812,19 @@
             const formData = new FormData(elements.form);
 
             // Calculate total monthly cost using reduce and modern syntax
+            const multipliers = {
+              "monthly-amount": 1,
+              "weekly-amount": DAYS_IN_MONTH / DAYS_IN_WEEK,
+              "daily-amount": DAYS_IN_MONTH,
+            };
+
             const monthlyTotal = [...formData.entries()]
               .filter(([name]) => name.endsWith("-amount"))
-              .reduce((total, [name, value]) => {
-                const numValue = parseFloat(value) || 0;
-
-                // Use template literals and object lookup
-                const multipliers = {
-                  [`${EXPENSE_TYPES.MONTHLY}-amount`]: 1,
-                  [`${EXPENSE_TYPES.WEEKLY}-amount`]:
-                    DAYS_IN_MONTH / DAYS_IN_WEEK,
-                  [`${EXPENSE_TYPES.DAILY}-amount`]: DAYS_IN_MONTH,
-                };
-
-                return total + numValue * (multipliers[name] || 0);
-              }, 0);
+              .reduce(
+                (total, [name, value]) =>
+                  total + (parseFloat(value) || 0) * (multipliers[name] || 0),
+                0
+              );
 
             // Calculate expenses until payday
             const payDay = parseInt(formData.get("pay-day")) || 25;
@@ -802,11 +837,9 @@
 
           const calculateExpensesUntilPayday = (payDay) => {
             const today = new Date();
-            const { currentDay, currentMonth, currentYear } = {
-              currentDay: today.getDate(),
-              currentMonth: today.getMonth(),
-              currentYear: today.getFullYear(),
-            };
+            const currentDay = today.getDate();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
 
             // Determine payday date using ternary operator
             const payDayDate =
@@ -826,7 +859,6 @@
                 expense,
                 'input[name="daily-amount"]'
               );
-
               let daysUntilPayday = Math.ceil(
                 (payDayDate - today) / MS_PER_DAY
               );
@@ -856,7 +888,7 @@
 
               if (!dayOfWeek) return total;
 
-              const targetDay = DAY_MAP[dayOfWeek];
+              const targetDay = parseInt(dayOfWeek);
               let nextOccurrence = new Date(today);
 
               // Find next occurrence of this day
@@ -912,13 +944,12 @@
           const extractExpenseData = (container, fields) =>
             [...container.querySelectorAll(".expense-item")]
               .map((expense) => {
-                const data = fields.reduce((acc, field) => {
-                  const element = expense.querySelector(`[name="${field}"]`);
-                  acc[field.split("-").pop()] = element?.value || "";
-                  return acc;
-                }, {});
-
-                // Only return if at least one field has data
+                const data = Object.fromEntries(
+                  fields.map((field) => [
+                    field.split("-").pop(),
+                    expense.querySelector(`[name="${field}"]`)?.value || "",
+                  ])
+                );
                 return Object.values(data).some(Boolean) ? data : null;
               })
               .filter(Boolean);
@@ -975,26 +1006,26 @@
                 });
               };
 
-              // Load all expense types using destructuring
+              // Load all expense types
               const { monthlyExpenses, weeklyExpenses, dailyExpenses } = data;
 
               loadExpenses(
                 monthlyExpenses,
                 elements.monthlyTemplate,
                 elements.monthlyContainer,
-                EXPENSE_TYPES.MONTHLY
+                "monthly"
               );
               loadExpenses(
                 weeklyExpenses,
                 elements.weeklyTemplate,
                 elements.weeklyContainer,
-                EXPENSE_TYPES.WEEKLY
+                "weekly"
               );
               loadExpenses(
                 dailyExpenses,
                 elements.dailyTemplate,
                 elements.dailyContainer,
-                EXPENSE_TYPES.DAILY
+                "daily"
               );
 
               // Update totals after loading
@@ -1010,8 +1041,10 @@
       </form>
 
       <footer>
-        <div class="copyright">© Remi Shergold</div>
-        <div class="tagline">My first vibe coded app</div>
+        <div class="footer-content">
+          <div class="copyright">© Remi Shergold</div>
+          <div class="tagline">My first vibe coded app</div>
+        </div>
       </footer>
     </div>
   </body>
