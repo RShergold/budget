@@ -8,7 +8,7 @@
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Track your monthly, weekly, and daily expenses with our smart budget app. Calculate spending until your next payday to avoid overdrafts and manage cash flow effectively."
+      content="Calculate your remaining expenses until payday to avoid overspending. Smart budget tracker that shows exactly how much you'll spend before your next paycheck arrives."
     />
     <meta
       name="keywords"
@@ -27,9 +27,9 @@
     />
     <meta
       property="og:description"
-      content="Track your monthly, weekly, and daily expenses with our smart budget app. Calculate spending until your next payday to avoid overdrafts and manage cash flow effectively."
+      content="Calculate your remaining expenses until payday to avoid overspending. Smart budget tracker that shows exactly how much you'll spend before your next paycheck arrives."
     />
-    <meta property="og:url" content="https://remi-shergold.com/budget/" />
+    <meta property="og:url" content="https://remi-shergold.com/budget" />
     <meta property="og:site_name" content="Budget App" />
 
     <!-- Twitter -->
@@ -40,11 +40,11 @@
     />
     <meta
       name="twitter:description"
-      content="Track your monthly, weekly, and daily expenses with our smart budget app. Calculate spending until your next payday to avoid overdrafts and manage cash flow effectively."
+      content="Calculate your remaining expenses until payday to avoid overspending. Smart budget tracker that shows exactly how much you'll spend before your next paycheck arrives."
     />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://remi-shergold.com/budget/" />
+    <link rel="canonical" href="https://remi-shergold.com/budget" />
     <style>
       :root {
         /* iOS Colors */
@@ -55,27 +55,21 @@
         --ios-red-light: #ff6961;
         --ios-red-dark: #d70015;
         --ios-green: #34c759;
-        --ios-orange: #ff9500;
-        --ios-purple: #af52de;
         --ios-gray: #8e8e93;
         --ios-gray-light: #c7c7cc;
-        --ios-gray-ultralight: #f2f2f7;
         --ios-separator: rgba(60, 60, 67, 0.36);
 
         /* iOS Backgrounds */
         --ios-background: #f2f2f7;
         --ios-grouped-background: #ffffff;
-        --ios-secondary-background: #ffffff;
         --ios-tertiary-background: #f2f2f7;
 
         /* iOS Text Colors */
         --ios-label: #000000;
         --ios-secondary-label: rgba(60, 60, 67, 0.6);
         --ios-tertiary-label: rgba(60, 60, 67, 0.3);
-        --ios-quaternary-label: rgba(60, 60, 67, 0.18);
 
         /* Spacing */
-        --spacing-xs: 0.25rem;
         --spacing-sm: 0.5rem;
         --spacing-md: 0.75rem;
         --spacing-lg: 1rem;
@@ -85,25 +79,16 @@
 
         /* iOS Border radius */
         --ios-radius: 0.625rem;
-        --ios-radius-large: 1rem;
-        --ios-radius-xl: 1.25rem;
 
         /* iOS Typography */
-        --ios-title1: 1.75rem;
         --ios-title2: 1.375rem;
         --ios-title3: 1.25rem;
-        --ios-headline: 1.063rem;
         --ios-body: 1rem;
         --ios-callout: 1rem;
-        --ios-subhead: 0.938rem;
         --ios-footnote: 0.813rem;
-        --ios-caption1: 0.75rem;
-        --ios-caption2: 0.688rem;
 
         /* iOS Shadows */
         --ios-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12);
-        --ios-shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07);
-        --ios-shadow-large: 0 10px 25px rgba(0, 0, 0, 0.15);
       }
 
       * {
@@ -121,6 +106,9 @@
         padding: 0;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
 
       /* iOS-style app container */
@@ -128,35 +116,37 @@
         max-width: 26rem;
         margin: 0 auto;
         background: var(--ios-background);
-        min-height: 100vh;
-        padding: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
       }
 
-      /* iOS-style sections */
-      fieldset {
+      /* Budget form with proper spacing */
+      #budget-form {
+        flex: 1;
+        padding-bottom: var(--spacing-2xl);
+      }
+
+      /* iOS-style inset grouped sections */
+      .section-group {
         border: none;
         border-radius: var(--ios-radius);
-        margin-bottom: var(--spacing-2xl);
+        margin: 0 var(--spacing-lg) var(--spacing-2xl) var(--spacing-lg);
         padding: 0;
         background: var(--ios-grouped-background);
         box-shadow: var(--ios-shadow-light);
         overflow: hidden;
       }
 
-      /* iOS-style section headers */
-      legend {
-        width: 100%;
-        padding: var(--spacing-lg) var(--spacing-xl);
-        background: var(--ios-grouped-background);
-        color: var(--ios-label);
-        font-size: var(--ios-title3);
+      /* iOS-style inset grouped section headers */
+      .section-header {
+        margin: 0 var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
+        padding: 0;
+        color: var(--ios-secondary-label);
+        font-size: var(--ios-callout);
         font-weight: 600;
-        border: none;
-        border-radius: 0;
-        text-shadow: none;
-        box-shadow: none;
-        border-bottom: 1px solid var(--ios-separator);
-        margin-bottom: 0;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
       }
 
       /* iOS-style list items */
@@ -165,10 +155,27 @@
         padding: var(--spacing-lg) var(--spacing-xl);
         background: var(--ios-grouped-background);
         position: relative;
+        max-height: 500px;
+        opacity: 1;
+        transform: scale(1);
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
       }
 
       .expense-item:last-child {
         border-bottom: none;
+      }
+
+      /* Animation for new expense items */
+      .expense-item.new-item {
+        max-height: 0;
+        opacity: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        transform: scale(0.98);
       }
 
       /* iOS-style input rows */
@@ -278,11 +285,6 @@
         padding-right: 3rem;
       }
 
-      input[name="pay-day"] {
-        width: 5rem;
-        text-align: center;
-      }
-
       /* iOS-style input prefixes */
       .amount-input-wrapper {
         position: relative;
@@ -306,7 +308,7 @@
       }
 
       .day-input-wrapper::before {
-        content: "Day:";
+        content: "Day";
         position: absolute;
         left: var(--spacing-lg);
         top: 50%;
@@ -318,12 +320,35 @@
         z-index: 1;
       }
 
+      .pay-day-input-wrapper {
+        position: relative;
+      }
+
+      .pay-day-input-wrapper::before {
+        content: "Pay day";
+        position: absolute;
+        left: var(--spacing-lg);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--ios-secondary-label);
+        font-size: var(--ios-body);
+        font-weight: 500;
+        pointer-events: none;
+        z-index: 1;
+        letter-spacing: 0.5px;
+      }
+
       input[name$="-amount"] {
         padding-left: 2.5rem;
       }
 
       input[name="monthly-day"] {
         padding-left: 3.5rem;
+      }
+
+      input[name="pay-day"] {
+        padding-left: 5.5rem;
+        width: 10rem;
       }
 
       /* iOS-style focus states */
@@ -365,6 +390,7 @@
       #weekly-expenses-container,
       #daily-expenses-container {
         margin-bottom: 0;
+        overflow: hidden;
       }
 
       /* Pay day section content */
@@ -466,14 +492,14 @@
 
       /* iOS-style responsive improvements */
       @media (max-width: 30rem) {
-        fieldset {
+        .section-group {
           border-radius: var(--ios-radius);
-          margin-bottom: var(--spacing-xl);
+          margin: 0 var(--spacing-md) var(--spacing-xl) var(--spacing-md);
         }
 
-        legend {
-          font-size: var(--ios-title3);
-          padding: var(--spacing-lg);
+        .section-header {
+          font-size: var(--ios-callout);
+          margin: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
         }
 
         .expense-item {
@@ -487,22 +513,6 @@
         }
       }
 
-      /* iOS-style loading animation */
-      .expense-item {
-        animation: slideInFromRight 0.3s ease-out;
-      }
-
-      @keyframes slideInFromRight {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
       /* iOS-style touch improvements */
       button,
       input,
@@ -513,8 +523,8 @@
 
       /* Webpage-style footer */
       footer {
-        margin-top: var(--spacing-3xl);
-        padding: var(--spacing-2xl) var(--spacing-xl);
+        margin-top: auto;
+        padding: var(--spacing-xl) 0;
         background: transparent;
         border-top: 1px solid var(--ios-separator);
         display: flex;
@@ -543,6 +553,7 @@
       .footer-content {
         max-width: 26rem;
         margin: 0 auto;
+        padding: 0 var(--spacing-lg);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -551,7 +562,7 @@
 
       @media (max-width: 30rem) {
         footer {
-          padding: var(--spacing-xl);
+          padding: var(--spacing-lg) 0;
         }
 
         .footer-content {
@@ -615,7 +626,6 @@
                   min="1"
                   max="31"
                   inputmode="numeric"
-                  placeholder="Day of the month"
                   tabindex="3"
                 />
               </div>
@@ -695,16 +705,15 @@
           </div>
         </template>
 
-        <fieldset>
-          <legend>Pay Day</legend>
+        <h2 class="section-header">Pay Day</h2>
+        <section class="section-group">
           <div class="pay-day-content">
             <p class="pay-day-explanation">
               Enter the day of the month you receive your salary to calculate
               how much you'll spend before your next payday. This helps you plan
               your cash flow and avoid overdrafts.
             </p>
-            <label
-              >Pay day:
+            <div class="pay-day-input-wrapper">
               <input
                 type="number"
                 name="pay-day"
@@ -712,34 +721,35 @@
                 min="1"
                 max="31"
                 value="25"
+                placeholder="Day of the month"
               />
-            </label>
+            </div>
           </div>
-        </fieldset>
+        </section>
 
-        <fieldset>
-          <legend>Monthly Expenses</legend>
+        <h2 class="section-header">Monthly Expenses</h2>
+        <section class="section-group">
           <div id="monthly-expenses-container"></div>
           <button type="button" id="add-monthly-expense">
             Add Monthly Expense
           </button>
-        </fieldset>
+        </section>
 
-        <fieldset>
-          <legend>Weekly Expenses</legend>
+        <h2 class="section-header">Weekly Expenses</h2>
+        <section class="section-group">
           <div id="weekly-expenses-container"></div>
           <button type="button" id="add-weekly-expense">
             Add Weekly Expense
           </button>
-        </fieldset>
+        </section>
 
-        <fieldset>
-          <legend>Daily Expenses</legend>
+        <h2 class="section-header">Daily Expenses</h2>
+        <section class="section-group">
           <div id="daily-expenses-container"></div>
           <button type="button" id="add-daily-expense">
             Add Daily Expense
           </button>
-        </fieldset>
+        </section>
 
         <script>
           // Constants
@@ -809,10 +819,21 @@
           // Add expense functions
           const addExpense = (template, container, nameSelector) => () => {
             const clone = createExpenseItem(template);
+
+            // Add animation class to the expense item before adding to DOM
+            const expenseItem = clone.querySelector(".expense-item");
+            expenseItem?.classList.add("new-item");
+
+            // Add the cloned element to container
             container.appendChild(clone);
 
             // Get the newly added element
             const newElement = container.lastElementChild;
+
+            // Trigger the slide-in animation on next frame
+            requestAnimationFrame(() => {
+              newElement.classList.remove("new-item");
+            });
 
             // Focus the name input
             const nameInput = newElement.querySelector(nameSelector);
@@ -1065,7 +1086,7 @@
                 });
               };
 
-              // Load all expense types
+              // Load all expense types using destructuring
               const { monthlyExpenses, weeklyExpenses, dailyExpenses } = data;
 
               loadExpenses(
