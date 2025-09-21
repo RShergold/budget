@@ -307,24 +307,6 @@
         z-index: 1;
       }
 
-      .pay-day-input-wrapper {
-        position: relative;
-      }
-
-      .pay-day-input-wrapper::before {
-        content: "Pay day";
-        position: absolute;
-        left: var(--spacing-lg);
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--ios-secondary-label);
-        font-size: var(--ios-body);
-        font-weight: 500;
-        pointer-events: none;
-        z-index: 1;
-        letter-spacing: 0.5px;
-      }
-
       input[name$="-amount"] {
         padding-left: 2.5rem;
       }
@@ -337,9 +319,8 @@
         width: 9.25rem;
       }
 
-      input[name="pay-day"] {
-        padding-left: 5.5rem;
-        width: 10rem;
+      select[name="pay-day"] {
+        width: 8rem;
       }
 
       /* iOS-style focus states */
@@ -722,7 +703,7 @@
           </div>
         </template>
 
-        <h2 class="section-header">Pay Day</h2>
+        <h2 class="section-header">Payday</h2>
         <section class="section-group">
           <div class="pay-day-content">
             <p class="pay-day-explanation">
@@ -731,15 +712,40 @@
               your cash flow and avoid overdrafts.
             </p>
             <div class="pay-day-input-wrapper">
-              <input
-                type="number"
-                name="pay-day"
-                step="1"
-                min="1"
-                max="31"
-                value="25"
-                placeholder="Day of the month"
-              />
+              <select name="pay-day">
+                <option value="">Payday</option>
+                <option value="1">1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+                <option value="4">4th</option>
+                <option value="5">5th</option>
+                <option value="6">6th</option>
+                <option value="7">7th</option>
+                <option value="8">8th</option>
+                <option value="9">9th</option>
+                <option value="10">10th</option>
+                <option value="11">11th</option>
+                <option value="12">12th</option>
+                <option value="13">13th</option>
+                <option value="14">14th</option>
+                <option value="15">15th</option>
+                <option value="16">16th</option>
+                <option value="17">17th</option>
+                <option value="18">18th</option>
+                <option value="19">19th</option>
+                <option value="20">20th</option>
+                <option value="21">21st</option>
+                <option value="22">22nd</option>
+                <option value="23">23rd</option>
+                <option value="24">24th</option>
+                <option value="25">25th</option>
+                <option value="26">26th</option>
+                <option value="27">27th</option>
+                <option value="28">28th</option>
+                <option value="29">29th</option>
+                <option value="30">30th</option>
+                <option value="31">31st</option>
+              </select>
             </div>
           </div>
         </section>
@@ -794,7 +800,7 @@
             addDailyButton: document.getElementById("add-daily-expense"),
             monthlyTotal: document.getElementById("monthly-total"),
             paydayTotal: document.getElementById("payday-total"),
-            payDayInput: document.querySelector('input[name="pay-day"]'),
+            payDayInput: document.querySelector('select[name="pay-day"]'),
           };
 
           // Currency formatter
