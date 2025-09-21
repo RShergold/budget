@@ -369,6 +369,19 @@
         transform: scale(1.02);
       }
 
+      /* iOS-style error states - only show after user interaction */
+      input:invalid:not(:placeholder-shown) {
+        background-color: rgba(255, 59, 48, 0.1);
+        box-shadow: 0 0 0 2px var(--ios-red);
+        color: var(--ios-red-dark);
+      }
+
+      input:invalid:not(:placeholder-shown):focus {
+        background-color: rgba(255, 59, 48, 0.15);
+        box-shadow: 0 0 0 2px var(--ios-red);
+        transform: scale(1.02);
+      }
+
       /* iOS-style buttons */
       button:not(.remove-expense) {
         width: 100%;
@@ -635,6 +648,7 @@
                   min="1"
                   max="31"
                   inputmode="numeric"
+                  placeholder=" "
                   tabindex="3"
                 />
               </div>
