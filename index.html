@@ -810,7 +810,25 @@
           const addExpense = (template, container, nameSelector) => () => {
             const clone = createExpenseItem(template);
             container.appendChild(clone);
-            container.lastElementChild.querySelector(nameSelector)?.focus();
+
+            // Get the newly added element
+            const newElement = container.lastElementChild;
+
+            // Focus the name input
+            const nameInput = newElement.querySelector(nameSelector);
+            if (nameInput) {
+              nameInput.focus();
+
+              // Scroll the new element into view to avoid keyboard overlap
+              setTimeout(() => {
+                newElement.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                  inline: "nearest",
+                });
+              }, 100); // Small delay to ensure element is rendered
+            }
+
             updateAndSave();
           };
 
