@@ -1,0 +1,467 @@
+:root {
+  /* iOS Colors */
+  --ios-blue: #007aff;
+  --ios-blue-light: #5ac8fa;
+  --ios-blue-dark: #0051d0;
+  --ios-red: #ff3b30;
+  --ios-red-light: #ff6961;
+  --ios-red-dark: #d70015;
+  --ios-green: #34c759;
+  --ios-gray: #8e8e93;
+  --ios-gray-light: #c7c7cc;
+  --ios-separator: rgba(60, 60, 67, 0.36);
+
+  /* iOS Backgrounds */
+  --ios-background: #f2f2f7;
+  --ios-grouped-background: #ffffff;
+  --ios-tertiary-background: #f2f2f7;
+
+  /* iOS Text Colors */
+  --ios-label: #000000;
+  --ios-secondary-label: rgba(60, 60, 67, 0.6);
+  --ios-tertiary-label: rgba(60, 60, 67, 0.3);
+
+  /* Spacing */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.25rem;
+  --spacing-2xl: 2rem;
+  --spacing-3xl: 3rem;
+
+  /* iOS Border radius */
+  --ios-radius: 0.625rem;
+
+  /* iOS Typography */
+  --ios-title2: 1.375rem;
+  --ios-title3: 1.25rem;
+  --ios-body: 1rem;
+  --ios-callout: 1rem;
+  --ios-footnote: 0.813rem;
+
+  /* iOS Shadows */
+  --ios-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", sans-serif;
+  background: var(--ios-background);
+  color: var(--ios-label);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* iOS-style app container */
+.app-container {
+  max-width: 26rem;
+  margin: 0 auto;
+  background: var(--ios-background);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Budget form with proper spacing */
+#budget-form {
+  flex: 1;
+  padding-bottom: var(--spacing-2xl);
+}
+
+/* iOS-style inset grouped sections */
+.section-group {
+  border: none;
+  border-radius: var(--ios-radius);
+  margin: 0 var(--spacing-lg) var(--spacing-2xl) var(--spacing-lg);
+  background: var(--ios-grouped-background);
+  box-shadow: var(--ios-shadow-light);
+  overflow: hidden;
+}
+
+/* iOS-style inset grouped section headers */
+.section-header {
+  margin: 0 var(--spacing-lg) var(--spacing-md) var(--spacing-lg);
+  color: var(--ios-secondary-label);
+  font-size: var(--ios-callout);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* iOS-style list items */
+.expense-item {
+  border-bottom: 1px solid var(--ios-separator);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background: var(--ios-grouped-background);
+  position: relative;
+  max-height: 500px;
+  opacity: 1;
+  transform: scale(1);
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.expense-item:last-child {
+  border-bottom: none;
+}
+
+/* Animation for new expense items */
+.expense-item.new-item {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transform: scale(0.98);
+}
+
+/* iOS-style input rows */
+.name-row {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.name-row input {
+  flex: 1;
+}
+
+.name-row .remove-expense {
+  flex: 0 0 auto;
+}
+
+.details-row {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: center;
+}
+
+.details-row input {
+  flex: 1;
+  min-width: 0;
+}
+
+.details-row select {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.details-row .amount-input-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.details-row .day-input-wrapper {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+/* iOS-style trash icon remove button */
+.expense-item .remove-expense {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--ios-radius);
+  background: transparent;
+  color: var(--ios-red);
+  border: none;
+  font-size: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0.8;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff3b30' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='3,6 5,6 21,6'%3e%3c/polyline%3e%3cpath d='m19,6v14a2,2 0 0 1 -2,2H7a2,2 0 0 1 -2,-2V6m3,0V4a2,2 0 0 1 2,-2h4a2,2 0 0 1 2,2v2'%3e%3c/path%3e%3cline x1='10' y1='11' x2='10' y2='17'%3e%3c/line%3e%3cline x1='14' y1='11' x2='14' y2='17'%3e%3c/line%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.25rem;
+}
+
+.expense-item .remove-expense:hover {
+  opacity: 1;
+}
+
+.expense-item .remove-expense:active {
+  transform: scale(0.95);
+  opacity: 0.6;
+}
+
+/* iOS-style inputs */
+input,
+select {
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: none;
+  border-radius: var(--ios-radius);
+  font-size: var(--ios-body);
+  background: var(--ios-tertiary-background);
+  color: var(--ios-label);
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+/* iOS-style select dropdown */
+select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007aff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-lg) center;
+  background-size: 1rem;
+  padding-right: 3rem;
+}
+
+/* iOS-style input prefixes */
+.amount-input-wrapper {
+  position: relative;
+}
+
+.amount-input-wrapper::before {
+  content: "£";
+  position: absolute;
+  left: var(--spacing-lg);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ios-secondary-label);
+  font-size: var(--ios-body);
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 1;
+}
+
+input[name$="-amount"] {
+  padding-left: 2.5rem;
+}
+
+select[name="monthly-day"] {
+  width: 6.25rem;
+}
+
+select[name="weekly-day"] {
+  width: 9.25rem;
+}
+
+select[name="pay-day"] {
+  width: 8rem;
+}
+
+/* iOS-style focus states */
+input:focus,
+select:focus {
+  outline: none;
+  background-color: white;
+  box-shadow: 0 0 0 2px var(--ios-blue);
+  transform: scale(1.02);
+}
+
+/* iOS-style buttons */
+button:not(.remove-expense) {
+  width: 100%;
+  padding: var(--spacing-xl);
+  background: transparent;
+  color: var(--ios-blue);
+  border: none;
+  border-radius: var(--ios-radius);
+  font-size: var(--ios-body);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+button:not(.remove-expense):hover {
+  color: var(--ios-blue-dark);
+}
+
+button:not(.remove-expense):active {
+  opacity: 0.6;
+  transform: scale(0.95);
+}
+
+/* Container spacing */
+#monthly-expenses-container,
+#weekly-expenses-container,
+#daily-expenses-container {
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+/* Pay day section content */
+.pay-day-content {
+  padding: var(--spacing-xl);
+}
+
+/* Pay day explanation text */
+.pay-day-explanation {
+  margin-bottom: var(--spacing-lg);
+  color: var(--ios-label);
+  font-size: var(--ios-body);
+  line-height: 1.5;
+}
+
+/* iOS-style app header */
+.app-header {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  background: linear-gradient(135deg, #64b5f6 0%, #a4c0d6 100%);
+  color: var(--ios-label);
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.1);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.app-header-content {
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl)
+    var(--spacing-lg);
+  text-align: left;
+}
+
+.app-header h1 {
+  font-size: var(--ios-title2);
+  font-weight: 600;
+  margin-bottom: var(--spacing-2xl);
+  text-align: left;
+  color: var(--ios-label);
+}
+
+.app-header .primary-stat {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.app-header .primary-stat-label {
+  font-size: var(--ios-body);
+  color: var(--ios-label);
+  margin-bottom: var(--spacing-sm);
+  font-weight: 400;
+}
+
+.app-header .primary-stat-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--ios-label);
+  line-height: 1;
+}
+
+.app-header .secondary-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--ios-radius);
+  backdrop-filter: blur(10px);
+}
+
+.app-header .secondary-stat-label {
+  font-size: var(--ios-callout);
+  color: var(--ios-secondary-label);
+  font-weight: 400;
+}
+
+.app-header .secondary-stat-value {
+  font-size: var(--ios-callout);
+  font-weight: 600;
+  color: var(--ios-label);
+}
+
+/* iOS-style responsive improvements */
+@media (max-width: 30rem) {
+  .section-group {
+    border-radius: var(--ios-radius);
+    margin: 0 var(--spacing-md) var(--spacing-xl) var(--spacing-md);
+  }
+
+  .section-header {
+    font-size: var(--ios-callout);
+    margin: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+  }
+
+  .expense-item {
+    padding: var(--spacing-lg);
+  }
+
+  input,
+  select,
+  button {
+    font-size: var(--ios-body);
+  }
+}
+
+/* iOS-style touch improvements */
+button,
+input,
+select {
+  min-height: 2.75rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Webpage-style footer */
+footer {
+  margin-top: auto;
+  padding: var(--spacing-xl) 0;
+  background: transparent;
+  border-top: 1px solid var(--ios-separator);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--ios-footnote);
+  color: var(--ios-secondary-label);
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+}
+
+footer .copyright {
+  font-weight: 600;
+  color: var(--ios-label);
+}
+
+footer .tagline {
+  font-style: italic;
+  color: var(--ios-tertiary-label);
+}
+
+.footer-content {
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 30rem) {
+  footer {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+}

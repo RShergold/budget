@@ -1,0 +1,4 @@
+- Always use modern JavaScript (ES6+) features and syntax.
+- Use SUIT CSS naming conventions for classes and IDs.
+- Never use inline styles.
+- Never mix HTML and JavaScript. Use HTML template tags.
